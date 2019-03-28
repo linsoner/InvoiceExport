@@ -29,19 +29,25 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BaseForm));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuInvoiceExport = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSet = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
             // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(908, 25);
@@ -59,6 +65,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuInvoiceExport,
             this.menuSet,
             this.menuAbout});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -66,6 +73,13 @@
             this.menuStrip1.Size = new System.Drawing.Size(908, 25);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // menuInvoiceExport
+            // 
+            this.menuInvoiceExport.Name = "menuInvoiceExport";
+            this.menuInvoiceExport.Size = new System.Drawing.Size(68, 21);
+            this.menuInvoiceExport.Text = "发票导出";
+            this.menuInvoiceExport.Click += new System.EventHandler(this.menuInvoiceExport_Click);
             // 
             // menuSet
             // 
@@ -89,6 +103,15 @@
             this.mainPanel.Size = new System.Drawing.Size(908, 378);
             this.mainPanel.TabIndex = 3;
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
+            // 
             // BaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -101,6 +124,8 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "BaseForm";
             this.Text = "百旺发票导出";
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -117,5 +142,7 @@
         protected System.Windows.Forms.ToolStrip toolStrip1;
         protected System.Windows.Forms.StatusStrip statusStrip1;
         protected System.Windows.Forms.Panel mainPanel;
+        private System.Windows.Forms.ToolStripMenuItem menuInvoiceExport;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }

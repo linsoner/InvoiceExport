@@ -26,15 +26,8 @@ namespace BaiwangExport
 
         public static DataSet XmlToDataSet(string xmlStr)
         {
-            //DataTable table = new DataTable();
-
-
             XmlDocument doc = StringToXml(xmlStr);
             if (doc == null) return null;
-
-            //XElement doc = XElement.Parse(@"" + xmlStr + "");
-            
-
             XmlNode node = doc.SelectSingleNode("/business/body/output/returncode");
             int success = -1;
             if(!int.TryParse(node.InnerText,out success))
@@ -77,9 +70,10 @@ namespace BaiwangExport
 
                                     DataRow ItemRow = dataSet.Tables["Item"].NewRow();
                                     //dataSet.Tables["Item"].Rows.Add(ItemRow);
-                                    ItemRow["xh"] = nodelist[i].ChildNodes[j].Name == "fyxm" ? 2*k +1 : 2 * k;
+                                    ItemRow["xh"] = nodelist[i].ChildNodes[j].Name == "fyxm" ? 2*k +1 : 2 * k+2;
                                     ItemRow["fpdm"] = mstRow["fpdm"];
                                     for (int l = 0; l < itemNodeList[k].ChildNodes.Count; l++)
+
                                     {
                                         if (dataSet.Tables["Item"].Columns.Contains(itemNodeList[k].ChildNodes[l].Name))
                                         {
@@ -148,69 +142,95 @@ namespace BaiwangExport
 
             DataTable mstTable = new DataTable("Mst");
             DataColumn column = new DataColumn("fpdm", typeof(string));//发票代码
+            column.Caption = "发票代号";
             mstTable.Columns.Add(column);
             mstTable.PrimaryKey = new DataColumn[] { column };
 
             column = new DataColumn("fphm", typeof(string));//发票号码
+            column.Caption = "发票号码";
             mstTable.Columns.Add(column);
             column = new DataColumn("xh", typeof(int));
+            column.Caption = "序号";
             mstTable.Columns.Add(column);
             column = new DataColumn("fpzt", typeof(string));//发票状态
+            column.Caption = "发票状态";
             mstTable.Columns.Add(column);
             column = new DataColumn("scbz", typeof(string));//上传标志
+            column.Caption = "上传标志";
             mstTable.Columns.Add(column);
             column = new DataColumn("kprq", typeof(string));//开票日期
+            column.Caption = "开票日期";
             mstTable.Columns.Add(column);
             column = new DataColumn("xhdwsbh", typeof(string));//销货单位识别号
+            column.Caption = "销货单位识别号";
             mstTable.Columns.Add(column);
             column = new DataColumn("xhdwmc", typeof(string));
+            column.Caption = "销货单位";
             mstTable.Columns.Add(column);
             column = new DataColumn("ghdwsbh", typeof(string));//购货单位识别号
+            column.Caption = "购货单位识别号";
             mstTable.Columns.Add(column);
             column = new DataColumn("ghdwmc", typeof(string));
+            column.Caption = "购货单位";
             mstTable.Columns.Add(column);
-
-
             column = new DataColumn("zhsl", typeof(decimal));
+            column.Caption = "综合税率";
             mstTable.Columns.Add(column);
             column = new DataColumn("hjje", typeof(decimal));
+            column.Caption = "合计金额";
             mstTable.Columns.Add(column);
             column = new DataColumn("hjse", typeof(decimal));
+            column.Caption = "合计税额";
             mstTable.Columns.Add(column);
             column = new DataColumn("jshj", typeof(decimal));
+            column.Caption = "价税合计";
             mstTable.Columns.Add(column);
             column = new DataColumn("bz", typeof(string));
+            column.Caption = "备注";
             mstTable.Columns.Add(column);
 
             ds.Tables.Add(mstTable);
 
             DataTable ItemTable = new DataTable("Item");
             column = new DataColumn("fpdm", typeof(string));
+            column.Caption = "发票代号";
             ItemTable.Columns.Add(column);
             DataColumn column2 = new DataColumn("xh", typeof(string));
+            column2.Caption = "序号";
             ItemTable.Columns.Add(column2);
             ItemTable.PrimaryKey = new DataColumn[] { column ,column2 };
             column = new DataColumn("fphxz", typeof(string));
+            column.Caption = "发票行性质";
             ItemTable.Columns.Add(column);
             column = new DataColumn("spmc", typeof(string));
+            column.Caption = "商品名称";
             ItemTable.Columns.Add(column);
             column = new DataColumn("spsm", typeof(string));
+            column.Caption = "商品税目";
             ItemTable.Columns.Add(column);
             column = new DataColumn("ggxh", typeof(string));
+            column.Caption = "规格型号";
             ItemTable.Columns.Add(column);
             column = new DataColumn("dw", typeof(string));
+            column.Caption = "单位";
             ItemTable.Columns.Add(column);
             column = new DataColumn("spsl", typeof(string));
+            column.Caption = "商品数量";
             ItemTable.Columns.Add(column);
             column = new DataColumn("dj", typeof(string));
+            column.Caption = "单价";
             ItemTable.Columns.Add(column);
             column = new DataColumn("je", typeof(string));
+            column.Caption = "金额";
             ItemTable.Columns.Add(column);
             column = new DataColumn("sl", typeof(string));
+            column.Caption = "税率";
             ItemTable.Columns.Add(column);
             column = new DataColumn("se", typeof(string));
+            column.Caption = "税额";
             ItemTable.Columns.Add(column);
             column = new DataColumn("hsbz", typeof(string));
+            column.Caption = "含税标志";
             ItemTable.Columns.Add(column);
 
             ds.Tables.Add(ItemTable);

@@ -19,8 +19,21 @@ using NPOI.XSSF.UserModel;
 /// </summary>
 namespace cl.thirdpart.npoi
 {
-    class NPOIHelper
+    public class NPOIHelper
     {
+        public static DataSet ExcelToDataSet(string filePath,int tableCount)
+        {
+            DataSet dataSet = new DataSet();
+
+            for (int i = 0; i < tableCount; i++)
+            {
+                DataTable table = ExcelToTableForXLS(filePath, i);
+                if (table != null)
+                    dataSet.Tables.Add(table);
+            }
+
+            return dataSet;
+        }
         /// <summary>
         /// 将Excel文件中的数据读出到DataTable中
         /// </summary>
@@ -28,67 +41,157 @@ namespace cl.thirdpart.npoi
         /// <returns></returns>
         public static DataTable ExcelToDataTable(string aFile)
         {
-            string aLastName = aFile.Substring(aFile.LastIndexOf(".") + 1, (aFile.Length - aFile.LastIndexOf(".") - 1)).ToLower();
-            if (aLastName.Equals("xls"))
-            {
-                return ExcelToTableForXLS(aFile);
-            }
-            else if (aLastName.Equals("xlsx"))
-            {
-                return ExcelToTableForXLSX(aFile);
-            }
-            else
-            {
-                return null;
-            }
+            return ExcelToTableForXLS(aFile);
+
+            //20190328
+            //string aLastName = aFile.Substring(aFile.LastIndexOf(".") + 1, (aFile.Length - aFile.LastIndexOf(".") - 1)).ToLower();
+            //if (aLastName.Equals("xls"))
+            //{
+            //    return ExcelToTableForXLS(aFile);
+            //}
+            //else if (aLastName.Equals("xlsx"))
+            //{
+            //    return ExcelToTableForXLSX(aFile);
+            //}
+            //else
+            //{
+            //    return null;
+            //}
         }
         /// <summary>
         /// 将Excel2003文件中的数据读出到DataTable中(xls)
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public static DataTable ExcelToTableForXLS(string file)
+        public static DataTable ExcelToTableForXLS(string file,int sheetNo=0)
         {
-            DataTable dt = new DataTable();
+            DataTable dt = null;
+            HSSFWorkbook hssfworkbook = null;
             using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
             {
-                HSSFWorkbook hssfworkbook = new HSSFWorkbook(fs);
-                ISheet sheet = hssfworkbook.GetSheetAt(0);
-
-                //表头
-                IRow header = sheet.GetRow(sheet.FirstRowNum);
-                List<int> columns = new List<int>();
-                for (int i = 0; i < header.LastCellNum; i++)
+                try
                 {
-                    object obj = GetValueTypeForXLS(header.GetCell(i) as HSSFCell);
-                    if (obj == null || obj.ToString() == string.Empty)
-                    {
-                        dt.Columns.Add(new DataColumn("Columns" + i.ToString()));
-                        //continue;
-                    }
-                    else
-                        dt.Columns.Add(new DataColumn(obj.ToString()));
-                    columns.Add(i);
+                    hssfworkbook = new HSSFWorkbook(fs);
                 }
-                //数据
-                for (int i = sheet.FirstRowNum + 1; i <= sheet.LastRowNum; i++)
+                catch (NPOI.POIFS.FileSystem.OfficeXmlFileException)
                 {
-                    DataRow dr = dt.NewRow();
-                    bool hasValue = false;
-                    foreach (int j in columns)
-                    {
-                        dr[j] = GetValueTypeForXLS(sheet.GetRow(i).GetCell(j) as HSSFCell);
-                        if (dr[j] != null && dr[j].ToString() != string.Empty)
-                        {
-                            hasValue = true;
-                        }
-                    }
-                    if (hasValue)
-                    {
-                        dt.Rows.Add(dr);
-                    }
+                    return ExcelToTableForXLSX(file);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
                 }
             }
+
+            dt = new DataTable();
+            ISheet sheet = hssfworkbook.GetSheetAt(sheetNo);
+
+            //表头
+            IRow header = sheet.GetRow(sheet.FirstRowNum);
+            List<int> columns = new List<int>();
+            for (int i = 0; i < header.LastCellNum; i++)
+            {
+                object obj = GetValueTypeForXLS(header.GetCell(i) as HSSFCell);
+                if (obj == null || obj.ToString() == string.Empty)
+                {
+                    dt.Columns.Add(new DataColumn("Columns" + i.ToString()));
+                    //continue;
+                }
+                else
+                    dt.Columns.Add(new DataColumn(obj.ToString()));
+                columns.Add(i);
+            }
+            //数据
+            for (int i = sheet.FirstRowNum + 1; i <= sheet.LastRowNum; i++)
+            {
+                DataRow dr = dt.NewRow();
+                bool hasValue = false;
+                foreach (int j in columns)
+                {
+                    dr[j] = GetValueTypeForXLS(sheet.GetRow(i).GetCell(j) as HSSFCell);
+                    if (dr[j] != null && dr[j].ToString() != string.Empty)
+                    {
+                        hasValue = true;
+                    }
+                }
+                if (hasValue)
+                {
+                    dt.Rows.Add(dr);
+                }
+            }
+
+            return dt;
+        }
+
+        /// <summary>
+        /// 将Excel2007文件中的数据读出到DataTable中(xlsx)
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static DataTable ExcelToTableForXLSX(string file, int sheetNo = 0)
+        {
+            DataTable dt = null;
+            XSSFWorkbook xssfworkbook = null;
+            using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
+            {
+
+                try
+                {
+                    xssfworkbook = new XSSFWorkbook(fs);
+                }
+                catch (ICSharpCode.SharpZipLib.Zip.ZipException)
+                {
+                    try
+                    {
+                        return ExcelToTableForXLSX(file);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            dt = new DataTable();
+            ISheet sheet = xssfworkbook.GetSheetAt(sheetNo);
+
+            //表头
+            IRow header = sheet.GetRow(sheet.FirstRowNum);
+            List<int> columns = new List<int>();
+            for (int i = 0; i < header.LastCellNum; i++)
+            {
+                object obj = GetValueTypeForXLSX(header.GetCell(i) as XSSFCell);
+                if (obj == null || obj.ToString() == string.Empty)
+                {
+                    dt.Columns.Add(new DataColumn("Columns" + i.ToString()));
+                    //continue;
+                }
+                else
+                    dt.Columns.Add(new DataColumn(obj.ToString()));
+                columns.Add(i);
+            }
+            //数据
+            for (int i = sheet.FirstRowNum + 1; i <= sheet.LastRowNum; i++)
+            {
+                DataRow dr = dt.NewRow();
+                bool hasValue = false;
+                foreach (int j in columns)
+                {
+                    dr[j] = GetValueTypeForXLSX(sheet.GetRow(i).GetCell(j) as XSSFCell);
+                    if (dr[j] != null && dr[j].ToString() != string.Empty)
+                    {
+                        hasValue = true;
+                    }
+                }
+                if (hasValue)
+                {
+                    dt.Rows.Add(dr);
+                }
+            }
+
             return dt;
         }
 
@@ -150,34 +253,90 @@ namespace cl.thirdpart.npoi
         {
             try
             {
-            XSSFWorkbook xssfworkbook = new XSSFWorkbook();
-            ISheet sheet = xssfworkbook.CreateSheet("kk");
+                XSSFWorkbook xssfworkbook = new XSSFWorkbook();
+                DataTableToExcelSheet(dt, xssfworkbook);
 
-            //表头
-            IRow row = sheet.CreateRow(0);
-            for (int i = 0; i < dt.Columns.Count; i++)
-            {
-                ICell cell = row.CreateCell(i);
-                cell.SetCellValue(dt.Columns[i].ColumnName);
-            }
+                //转为字节数组
+                MemoryStream stream = new MemoryStream();
+                xssfworkbook.Write(stream);
+                var buf = stream.ToArray();
 
-            //数据
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                IRow row1 = sheet.CreateRow(i + 1);
-                for (int j = 0; j < dt.Columns.Count; j++)
+
+                //保存为Excel文件
+                using (FileStream fs = new FileStream(file, FileMode.Create, FileAccess.Write))
                 {
-                    ICell cell = row1.CreateCell(j);
-                    cell.SetCellValue(dt.Rows[i][j].ToString());
+                    fs.Write(buf, 0, buf.Length);
+                    fs.Flush();
                 }
             }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message + "\r\nNPOIHelper.DataTableToExcel2007");
+            }
+        }
 
-            //转为字节数组
-            MemoryStream stream = new MemoryStream();
-            xssfworkbook.Write(stream);
-            var buf = stream.ToArray();
+        /// <summary>
+        /// 将DataTable数据导出到Excel2007文件中(xlsx)
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="xssfworkbook"></param>
+        public static void DataTableToExcelSheet(DataTable dt, XSSFWorkbook xssfworkbook)
+        {
+            try
+            {
+                string sheetName = dt.TableName;
+                if (string.IsNullOrWhiteSpace(sheetName))
+                    sheetName = "sheet" + (xssfworkbook.NumberOfSheets + 1).ToString();
 
-            
+                ISheet sheet = xssfworkbook.CreateSheet(sheetName);
+
+                //表头
+                IRow row = sheet.CreateRow(0);
+                for (int i = 0; i < dt.Columns.Count; i++)
+                {
+                    ICell cell = row.CreateCell(i);
+                    string fieldName = (string.IsNullOrWhiteSpace(dt.Columns[i].Caption) ? dt.Columns[i].ColumnName :dt.Columns[i].Caption);
+                    cell.SetCellValue(fieldName);
+                }
+
+                //数据
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    IRow row1 = sheet.CreateRow(i + 1);
+                    for (int j = 0; j < dt.Columns.Count; j++)
+                    {
+                        ICell cell = row1.CreateCell(j);
+                        cell.SetCellValue(dt.Rows[i][j].ToString());
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message + "\r\nNPOIHelper.DataTableToExcelSheet");
+            }
+        }
+
+        /// <summary>
+        /// 将DataTable数据导出到Excel2007文件中(xlsx) 20190328 
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="file"></param>
+        public static void DataSetToExcel2007(DataSet dataSet, string file)
+        {
+            try
+            {
+                XSSFWorkbook xssfworkbook = new XSSFWorkbook();
+
+                foreach(DataTable table in dataSet.Tables)
+                {
+                    DataTableToExcelSheet(table, xssfworkbook);
+                }
+                
+                //转为字节数组
+                MemoryStream stream = new MemoryStream();
+                xssfworkbook.Write(stream);
+                var buf = stream.ToArray();
+
                 //保存为Excel文件
                 using (FileStream fs = new FileStream(file, FileMode.Create, FileAccess.Write))
                 {
@@ -216,56 +375,6 @@ namespace cl.thirdpart.npoi
                 default:
                     return "=" + cell.CellFormula;
             }
-        }
-
-        /// <summary>
-        /// 将Excel2007文件中的数据读出到DataTable中(xlsx)
-        /// </summary>
-        /// <param name="file"></param>
-        /// <returns></returns>
-        public static DataTable ExcelToTableForXLSX(string file)
-        {
-            DataTable dt = new DataTable();
-            using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
-            {
-                XSSFWorkbook xssfworkbook = new XSSFWorkbook(fs);
-                ISheet sheet = xssfworkbook.GetSheetAt(0);
-
-                //表头
-                IRow header = sheet.GetRow(sheet.FirstRowNum);
-                List<int> columns = new List<int>();
-                for (int i = 0; i < header.LastCellNum; i++)
-                {
-                    object obj = GetValueTypeForXLSX(header.GetCell(i) as XSSFCell);
-                    if (obj == null || obj.ToString() == string.Empty)
-                    {
-                        dt.Columns.Add(new DataColumn("Columns" + i.ToString()));
-                        //continue;
-                    }
-                    else
-                        dt.Columns.Add(new DataColumn(obj.ToString()));
-                    columns.Add(i);
-                }
-                //数据
-                for (int i = sheet.FirstRowNum + 1; i <= sheet.LastRowNum; i++)
-                {
-                    DataRow dr = dt.NewRow();
-                    bool hasValue = false;
-                    foreach (int j in columns)
-                    {
-                        dr[j] = GetValueTypeForXLSX(sheet.GetRow(i).GetCell(j) as XSSFCell);
-                        if (dr[j] != null && dr[j].ToString() != string.Empty)
-                        {
-                            hasValue = true;
-                        }
-                    }
-                    if (hasValue)
-                    {
-                        dt.Rows.Add(dr);
-                    }
-                }
-            }
-            return dt;
         }
 
         /// <summary>
@@ -308,6 +417,8 @@ namespace cl.thirdpart.npoi
             if (dgv.SelectedRows.Count == 0) return;
             //创建主要对象
             HSSFWorkbook workbook = new HSSFWorkbook();
+
+
             HSSFSheet sheet = (HSSFSheet)workbook.CreateSheet("Weight");
             //设置字体，大小，对齐方式
             HSSFCellStyle style = (HSSFCellStyle)workbook.CreateCellStyle();
@@ -375,6 +486,10 @@ namespace cl.thirdpart.npoi
                     sheet.SetColumnWidth(j, (Value.Length + 10) * 256);
                 }
             }
+
+
+
+
             //保存文件
             //string saveFileName = "";
             //SaveFileDialog saveDialog = new SaveFileDialog();

@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BWJF_SKOP_ATLLib;
 using System.IO;
+using cl.thirdpart.npoi;
 namespace BaiwangExport
 {
     public partial class Form1 : Form
     {
-        BWJF_SKOP_ATLLib.SKControlLogic sam = new BWJF_SKOP_ATLLib.SKControlLogic();
+        BWJF_SKOP_ATLLib.SKControlLogic sam = null;
 
         public Form1()
         {
@@ -246,6 +247,11 @@ namespace BaiwangExport
             long n1 = sam.SetOutputMode(1);
             MessageBox.Show(n1.ToString(), "系统提示3");
 
+        }
+
+        private void button34_Click(object sender, EventArgs e)
+        {
+            NPOIHelper.ExcelToTableForXLSX(@"C:\Users\soonfor\Desktop\AAA.XLS");
         }
     }
 }
