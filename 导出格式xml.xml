@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="gbk"?> 
+<business comment="鍙戠エ鏌ヨ" id="FPCX"> 
+<body yylxdm="1"> 
+<output> 
+	<fplxdm>鍙戠エ绫诲瀷浠ｇ爜</fplxdm> 
+	<returncode>0</returncode> 
+	<returnmsg>鎴愬姛</returnmsg> 
+	<fpxx count="1"> 
+		<group xh="1"> 
+			<fpdm>鍙戠エ浠ｇ爜</fpdm> 
+			<fphm>鍙戠エ鍙风爜</fphm> 
+			<fpzt>鍙戠エ鐘舵€?/fpzt> 
+			<scbz>涓婁紶鏍囧織</scbz> 
+			<kprq>寮€绁ㄦ棩鏈?/kprq> 
+			<kpsj>寮€绁ㄦ椂闂?/kpsj> 
+			<tspz>鐗规畩绁ㄧ鏍囪瘑<tspz> 
+			<skpbh>绋庢帶鐩樼紪鍙?/skpbh> 
+			<skm>绋庢帶鐮?/skm> 
+			<jym>鏍￠獙鐮?/jym> 
+			<xhdwsbh>閿€璐у崟浣嶈瘑鍒彿</xhdwsbh> 
+			<xhdwmc>閿€璐у崟浣嶅悕绉?/xhdwmc> 
+			<xhdwdzdh>閿€璐у崟浣嶅湴鍧€鐢佃瘽</xhdwdzdh> 
+			<xhdwyhzh>閿€璐у崟浣嶉摱琛屽笎鍙?/xhdwyhzh> 
+			<ghdwsbh>璐揣鍗曚綅璇嗗埆鍙?/ghdwsbh> 
+			<ghdwmc>璐揣鍗曚綅鍚嶇О</ghdwmc> 
+			<ghdwdzdh>璐揣鍗曚綅鍦板潃鐢佃瘽</ghdwdzdh> 
+			<ghdwyhzh>璐揣鍗曚綅閾惰甯愬彿</ghdwyhzh> 
+			<fyxm count="1"> 
+				<group xh="1"> 
+					<fphxz>鍙戠エ琛屾€ц川</fphxz> 
+					<spmc>鍟嗗搧鍚嶇О</spmc> 
+					<spsm>鍟嗗搧绋庣洰</spsm> 
+					<ggxh>瑙勬牸鍨嬪彿</ggxh> 
+					<dw>鍗曚綅</dw> 
+					<spsl>鍟嗗搧鏁伴噺</spsl> 
+					<dj>鍗曚环</dj> 
+					<je>閲戦</je> 
+					<sl>绋庣巼</sl> 
+					<se>绋庨</se> 
+					<hsbz>鍚◣鏍囧織</hsbz> 
+				</group> 
+			</fyxm> 
+			<qdxm count="1"> 
+				<group xh="1"> 
+					<fphxz>鍙戠エ琛屾€ц川</fphxz> 
+					<spmc>鍟嗗搧鍚嶇О</spmc> 
+					<spsm>鍟嗗搧绋庣洰</spsm> 
+					<ggxh>瑙勬牸鍨嬪彿</ggxh> 
+					<dw>鍗曚綅</dw> 
+					<spsl>鍟嗗搧鏁伴噺</spsl> 
+					<dj>鍗曚环</dj> 
+					<je>閲戦</je> 
+					<sl>绋庣巼</sl> 
+					<se>绋庨</se> 
+					<hsbz>鍚◣鏍囧織</hsbz> 
+				</group> 
+			</qdxm> 
+			<qtxm count="1"> 
+				<group xh="1"> 
+					<sl>绋庣巼</sl> 
+					<je>閲戦</je> 
+					<se>绋庨</se> 
+				</group> 
+			</qtxm> 
+			<zhsl>缁煎悎绋庣巼</zhsl> 
+			<hjje>鍚堣閲戦</hjje> 
+			<hjse>鍚堣绋庨</hjse> 
+			<jshj>浠风◣鍚堣</jshj> 
+			<bz>澶囨敞</bz> 
+			<skr>鏀舵浜?/skr> 
+			<fhr>澶嶆牳浜?/fhr> 
+			<kpr>寮€绁ㄤ汉</kpr> 
+			<jmbbh>鍔犲瘑鐗堟湰鍙?/jmbbh> 
+			<zyspmc>涓昏鍟嗗搧鍚嶇О</zyspmc> 
+			<spsm>鍟嗗搧绋庣洰</spsm> 
+			<qdbz>娓呭崟鏍囧織</qdbz> 
+			<ssyf>鎵€灞炴湀浠?/ssyf> 
+			<kpjh>寮€绁ㄦ満鍙?/kpjh> 
+			<tzdbh>閫氱煡鍗曠紪鍙?/tzdbh> 
+			<yfpdm>鍘熷彂绁ㄤ唬鐮?/yfpdm> 
+			<yfphm>鍘熷彂绁ㄥ彿鐮?/yfphm> 
+			<zfrq>浣滃簾鏃ユ湡</zfrq> 
+			<zfr>浣滃簾浜?/zfr> 
+			<qmcs>绛惧悕鍙傛暟</qmcs> 
+			<qmz>绛惧悕鍊?/qmz> 
+			<ykfsje>宸插紑璐熸暟閲戦</ykfsje> 
+		</group> 
+	</fpxx> 
+</output> 
+</body> 
+</business> 

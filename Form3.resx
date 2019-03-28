@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="textBox1.Text" xml:space="preserve">
+    <value>&lt;?xml version="1.0" encoding="gbk"?&gt;
+&lt;business comment="发票查询" id="FPCX"&gt;
+	&lt;body yylxdm="1"&gt;
+		&lt;output&gt;
+			&lt;fplxdm&gt;发票类型代码&lt;/fplxdm&gt;
+			&lt;returncode&gt;0&lt;/returncode&gt;
+			&lt;returnmsg&gt;成功&lt;/returnmsg&gt;
+			&lt;fpxx count="1"&gt;
+				&lt;group xh="1"&gt;
+					&lt;fpdm&gt;发票代码&lt;/fpdm&gt;
+					&lt;fphm&gt;发票号码&lt;/fphm&gt;
+					&lt;fpzt&gt;发票状态&lt;/fpzt&gt;
+					&lt;scbz&gt;上传标志&lt;/scbz&gt;
+					&lt;kprq&gt;开票日期&lt;/kprq&gt;
+					&lt;kpsj&gt;开票时间&lt;/kpsj&gt;
+					&lt;tspz&gt;特殊票种标识&lt;/tspz&gt;
+					&lt;skpbh&gt;税控盘编号&lt;/skpbh&gt;
+					&lt;skm&gt;税控码&lt;/skm&gt;
+					&lt;jym&gt;校验码&lt;/jym&gt;
+					&lt;xhdwsbh&gt;销货单位识别号&lt;/xhdwsbh&gt;
+					&lt;xhdwmc&gt;销货单位名称&lt;/xhdwmc&gt;
+					&lt;xhdwdzdh&gt;销货单位地址电话&lt;/xhdwdzdh&gt;
+					&lt;xhdwyhzh&gt;销货单位银行帐号&lt;/xhdwyhzh&gt;
+					&lt;ghdwsbh&gt;购货单位识别号&lt;/ghdwsbh&gt;
+					&lt;ghdwmc&gt;购货单位名称&lt;/ghdwmc&gt;
+					&lt;ghdwdzdh&gt;购货单位地址电话&lt;/ghdwdzdh&gt;
+					&lt;ghdwyhzh&gt;购货单位银行帐号&lt;/ghdwyhzh&gt;
+					&lt;fyxm count="1"&gt;
+						&lt;group xh="1"&gt;
+							&lt;fphxz&gt;发票行性质&lt;/fphxz&gt;
+							&lt;spmc&gt;商品名称&lt;/spmc&gt;
+							&lt;spsm&gt;商品税目&lt;/spsm&gt;
+							&lt;ggxh&gt;规格型号&lt;/ggxh&gt;
+							&lt;dw&gt;单位&lt;/dw&gt;
+							&lt;spsl&gt;11&lt;/spsl&gt;
+							&lt;dj&gt;111&lt;/dj&gt;
+							&lt;je&gt;1111&lt;/je&gt;
+							&lt;sl&gt;1&lt;/sl&gt;
+							&lt;se&gt;11&lt;/se&gt;
+							&lt;hsbz&gt;含税标志&lt;/hsbz&gt;
+						&lt;/group&gt;
+				    &lt;/fyxm&gt;
+					&lt;qdxm count="1"&gt;
+						&lt;group xh="1"&gt;
+							&lt;fphxz&gt;发票行性质&lt;/fphxz&gt;
+							&lt;spmc&gt;商品名称&lt;/spmc&gt;
+							&lt;spsm&gt;商品税目&lt;/spsm&gt;
+							&lt;ggxh&gt;规格型号&lt;/ggxh&gt;
+							&lt;dw&gt;单位&lt;/dw&gt;
+							&lt;spsl&gt;2&lt;/spsl&gt;
+							&lt;dj&gt;22&lt;/dj&gt;
+							&lt;je&gt;222&lt;/je&gt;
+							&lt;sl&gt;2&lt;/sl&gt;
+							&lt;se&gt;22&lt;/se&gt;
+							&lt;hsbz&gt;含税标志&lt;/hsbz&gt;
+						&lt;/group&gt;
+					&lt;/qdxm&gt;
+					&lt;qtxm count="1"&gt;
+						&lt;group xh="1"&gt;
+							&lt;sl&gt;税率&lt;/sl&gt;
+							&lt;je&gt;金额&lt;/je&gt;
+							&lt;se&gt;税额&lt;/se&gt;
+						&lt;/group&gt;
+					&lt;/qtxm&gt;
+					&lt;zhsl&gt;3&lt;/zhsl&gt;
+					&lt;hjje&gt;33&lt;/hjje&gt;
+					&lt;hjse&gt;33&lt;/hjse&gt;
+					&lt;jshj&gt;33&lt;/jshj&gt;
+					&lt;bz&gt;备注&lt;/bz&gt;
+					&lt;skr&gt;收款人&lt;/skr&gt;
+					&lt;fhr&gt;复核人&lt;/fhr&gt;
+					&lt;kpr&gt;开票人&lt;/kpr&gt;
+					&lt;jmbbh&gt;加密版本号&lt;/jmbbh&gt;
+					&lt;zyspmc&gt;主要商品名称&lt;/zyspmc&gt;
+					&lt;spsm&gt;商品税目&lt;/spsm&gt;
+					&lt;qdbz&gt;清单标志&lt;/qdbz&gt;
+					&lt;ssyf&gt;所属月份&lt;/ssyf&gt;
+					&lt;kpjh&gt;开票机号&lt;/kpjh&gt;
+					&lt;tzdbh&gt;通知单编号&lt;/tzdbh&gt;
+					&lt;yfpdm&gt;原发票代码&lt;/yfpdm&gt;
+					&lt;yfphm&gt;原发票号码&lt;/yfphm&gt;
+					&lt;zfrq&gt;作废日期&lt;/zfrq&gt;
+					&lt;zfr&gt;作废人&lt;/zfr&gt;
+					&lt;qmcs&gt;签名参数&lt;/qmcs&gt;
+					&lt;qmz&gt;签名值&lt;/qmz&gt;
+					&lt;ykfsje&gt;已开负数金额&lt;/ykfsje&gt;
+				&lt;/group&gt;
+			&lt;/fpxx&gt;
+		&lt;/output&gt;
+	&lt;/body&gt;
+&lt;/business&gt;</value>
+  </data>
+  <metadata name="fpdm.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="fphm.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xh.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="scbz.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="kprq.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="zhsl.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="hjje.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="hjse.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="jshj.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xhdwsbh.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="xhdwmc.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ghdwsbh.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ghdwmc.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="bz.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ykfsje.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="fphxz.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="spmc.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="spsm.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ggxh.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="dw.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="spsl.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="dj.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="je.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="sl.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="se.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="saveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>368, 17</value>
+  </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>512, 17</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>25</value>
+  </metadata>
+</root>
