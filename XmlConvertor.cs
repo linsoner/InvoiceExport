@@ -188,6 +188,10 @@ namespace BaiwangExport
             column = new DataColumn("bz", typeof(string));
             column.Caption = "备注";
             mstTable.Columns.Add(column);
+            column = new DataColumn("billNumber", typeof(string));
+            column.DefaultValue = 0;
+            column.Caption = "附件数";
+            mstTable.Columns.Add(column);
 
             ds.Tables.Add(mstTable);
 

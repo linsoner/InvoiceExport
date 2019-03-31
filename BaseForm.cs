@@ -13,20 +13,25 @@ namespace BaiwangExport
 {
     public partial class BaseForm : Form
     {
-        protected static IList<BaseForm> FormList = new List<BaseForm>();
+        protected static Dictionary<string,BaseForm> FormDictionary = new Dictionary<string, BaseForm>();
          public BaseForm()
         {
             InitializeComponent();
-            if (!FormList.Contains(this))
-                FormList.Add(this);
+            if (!FormDictionary.Keys.Contains(this.Name))
+                FormDictionary.Add(this.Name,this);
         }
 
         //设置
         private void toolStripLabelSet_Click(object sender, EventArgs e)
         {
-            var f = FormList.Single<BaseForm>(a => a.GetType() == typeof(FormSetting));
-            if (f != null) f.Show();
-            else new FormSetting().Show();
+            if (FormDictionary.Keys.Contains("FormSetting"))
+            {
+                FormDictionary["FormSetting"].Show();
+            }
+            else
+            {
+                new FormSetting().Show();
+            }
         }
 
         //关于
@@ -38,9 +43,26 @@ namespace BaiwangExport
         //发票导出
         private void menuInvoiceExport_Click(object sender, EventArgs e)
         {
-            var f = FormList.Single<BaseForm>(a => a.GetType() == typeof(FormInvoiceExport));
-            if (f != null) f.Show();
-            else new FormInvoiceExport().Show();
+            if (FormDictionary.Keys.Contains("FormInvoiceExport"))
+            {
+                FormDictionary["FormInvoiceExport"].Show();
+            }
+            else
+            {
+                new FormInvoiceExport().Show();
+            }
+        }
+
+        private void menuSDSetting_Click(object sender, EventArgs e)
+        {
+            if (FormDictionary.Keys.Contains("FormSDSetting"))
+            {
+                FormDictionary["FormSDSetting"].Show();
+            }
+            else
+            {
+                new FormSDSetting().Show();
+            }
         }
     }
 }

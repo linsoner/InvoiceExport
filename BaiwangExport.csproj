@@ -81,6 +81,14 @@
     <Compile Include="BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DBHelper.cs" />
+    <Compile Include="FormCredence.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCredence.Designer.cs">
+      <DependentUpon>FormCredence.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SD3000.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="DataTableConvertBytes.cs" />
     <Compile Include="Form1.cs">
@@ -88,6 +96,12 @@
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSDSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSDSetting.Designer.cs">
+      <DependentUpon>FormSDSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="FormSetting.cs">
       <SubType>Form</SubType>
@@ -107,12 +121,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="thirdpart\npoi\NPOIHelper.cs" />
     <Compile Include="thirdpart\print\DGVPrinter.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="XmlConvertor.cs" />
     <EmbeddedResource Include="BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCredence.resx">
+      <DependentUpon>FormCredence.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSDSetting.resx">
+      <DependentUpon>FormSDSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSetting.resx">
       <DependentUpon>FormSetting.cs</DependentUpon>

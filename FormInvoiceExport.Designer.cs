@@ -44,22 +44,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.fpdm = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fphm = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.xh = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.scbz = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fpzt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.kprq = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.zhsl = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.hjje = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.hjse = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.jshj = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bz = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.xhdwsbh = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.xhdwmc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghdwsbh = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ghdwmc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ykfsje = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.fphxz = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.spmc = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -74,6 +58,23 @@
             this.item_fpdm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.item_xh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hsbz = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fpdm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fphm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.xh = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.scbz = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fpzt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kprq = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.zhsl = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hjje = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hjse = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.jshj = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.billNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bz = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.xhdwsbh = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.xhdwmc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghdwsbh = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ghdwmc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ykfsje = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -231,6 +232,7 @@
             this.hjje,
             this.hjse,
             this.jshj,
+            this.billNumber,
             this.bz,
             this.xhdwsbh,
             this.xhdwmc,
@@ -240,126 +242,10 @@
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(1008, 220);
             this.dataGridView1.TabIndex = 1;
-            // 
-            // fpdm
-            // 
-            this.fpdm.DataPropertyName = "fpdm";
-            this.fpdm.HeaderText = "发票代码";
-            this.fpdm.Name = "fpdm";
-            this.fpdm.ReadOnly = true;
-            this.fpdm.Width = 120;
-            // 
-            // fphm
-            // 
-            this.fphm.DataPropertyName = "fphm";
-            this.fphm.HeaderText = "发票号码";
-            this.fphm.Name = "fphm";
-            this.fphm.ReadOnly = true;
-            this.fphm.Width = 120;
-            // 
-            // xh
-            // 
-            this.xh.DataPropertyName = "xh";
-            this.xh.HeaderText = "序号";
-            this.xh.Name = "xh";
-            this.xh.ReadOnly = true;
-            this.xh.Width = 60;
-            // 
-            // scbz
-            // 
-            this.scbz.DataPropertyName = "scbz";
-            this.scbz.HeaderText = "上传标志";
-            this.scbz.Name = "scbz";
-            this.scbz.ReadOnly = true;
-            this.scbz.Width = 60;
-            // 
-            // fpzt
-            // 
-            this.fpzt.HeaderText = "发票状态";
-            this.fpzt.Name = "fpzt";
-            this.fpzt.ReadOnly = true;
-            // 
-            // kprq
-            // 
-            this.kprq.DataPropertyName = "kprq";
-            this.kprq.HeaderText = "开票日期";
-            this.kprq.Name = "kprq";
-            this.kprq.ReadOnly = true;
-            // 
-            // zhsl
-            // 
-            this.zhsl.DataPropertyName = "zhsl";
-            this.zhsl.HeaderText = "综合税率";
-            this.zhsl.Name = "zhsl";
-            this.zhsl.ReadOnly = true;
-            // 
-            // hjje
-            // 
-            this.hjje.DataPropertyName = "hjje";
-            this.hjje.HeaderText = "合计金额";
-            this.hjje.Name = "hjje";
-            this.hjje.ReadOnly = true;
-            // 
-            // hjse
-            // 
-            this.hjse.DataPropertyName = "hjse";
-            this.hjse.HeaderText = "合计税额";
-            this.hjse.Name = "hjse";
-            this.hjse.ReadOnly = true;
-            // 
-            // jshj
-            // 
-            this.jshj.DataPropertyName = "jshj";
-            this.jshj.HeaderText = "价税合计";
-            this.jshj.Name = "jshj";
-            this.jshj.ReadOnly = true;
-            this.jshj.Width = 120;
-            // 
-            // bz
-            // 
-            this.bz.DataPropertyName = "bz";
-            this.bz.HeaderText = "备注";
-            this.bz.Name = "bz";
-            this.bz.ReadOnly = true;
-            // 
-            // xhdwsbh
-            // 
-            this.xhdwsbh.DataPropertyName = "xhdwsbh";
-            this.xhdwsbh.HeaderText = "销货单位识别号";
-            this.xhdwsbh.Name = "xhdwsbh";
-            this.xhdwsbh.ReadOnly = true;
-            // 
-            // xhdwmc
-            // 
-            this.xhdwmc.DataPropertyName = "xhdwmc";
-            this.xhdwmc.HeaderText = "销货单位名称";
-            this.xhdwmc.Name = "xhdwmc";
-            this.xhdwmc.ReadOnly = true;
-            // 
-            // ghdwsbh
-            // 
-            this.ghdwsbh.DataPropertyName = "ghdwsbh";
-            this.ghdwsbh.HeaderText = "购货单位识别号";
-            this.ghdwsbh.Name = "ghdwsbh";
-            this.ghdwsbh.ReadOnly = true;
-            // 
-            // ghdwmc
-            // 
-            this.ghdwmc.DataPropertyName = "ghdwmc";
-            this.ghdwmc.HeaderText = "购货单位名称";
-            this.ghdwmc.Name = "ghdwmc";
-            this.ghdwmc.ReadOnly = true;
-            // 
-            // ykfsje
-            // 
-            this.ykfsje.DataPropertyName = "ykfsje";
-            this.ykfsje.HeaderText = "已开负数金额";
-            this.ykfsje.Name = "ykfsje";
-            this.ykfsje.ReadOnly = true;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // dataGridView2
             // 
@@ -482,6 +368,127 @@
             this.hsbz.Name = "hsbz";
             this.hsbz.ReadOnly = true;
             // 
+            // fpdm
+            // 
+            this.fpdm.DataPropertyName = "fpdm";
+            this.fpdm.HeaderText = "发票代码";
+            this.fpdm.Name = "fpdm";
+            this.fpdm.ReadOnly = true;
+            this.fpdm.Width = 120;
+            // 
+            // fphm
+            // 
+            this.fphm.DataPropertyName = "fphm";
+            this.fphm.HeaderText = "发票号码";
+            this.fphm.Name = "fphm";
+            this.fphm.ReadOnly = true;
+            this.fphm.Width = 120;
+            // 
+            // xh
+            // 
+            this.xh.DataPropertyName = "xh";
+            this.xh.HeaderText = "序号";
+            this.xh.Name = "xh";
+            this.xh.ReadOnly = true;
+            this.xh.Width = 60;
+            // 
+            // scbz
+            // 
+            this.scbz.DataPropertyName = "scbz";
+            this.scbz.HeaderText = "上传标志";
+            this.scbz.Name = "scbz";
+            this.scbz.ReadOnly = true;
+            this.scbz.Width = 60;
+            // 
+            // fpzt
+            // 
+            this.fpzt.HeaderText = "发票状态";
+            this.fpzt.Name = "fpzt";
+            this.fpzt.ReadOnly = true;
+            // 
+            // kprq
+            // 
+            this.kprq.DataPropertyName = "kprq";
+            this.kprq.HeaderText = "开票日期";
+            this.kprq.Name = "kprq";
+            this.kprq.ReadOnly = true;
+            // 
+            // zhsl
+            // 
+            this.zhsl.DataPropertyName = "zhsl";
+            this.zhsl.HeaderText = "综合税率";
+            this.zhsl.Name = "zhsl";
+            this.zhsl.ReadOnly = true;
+            // 
+            // hjje
+            // 
+            this.hjje.DataPropertyName = "hjje";
+            this.hjje.HeaderText = "合计金额";
+            this.hjje.Name = "hjje";
+            this.hjje.ReadOnly = true;
+            // 
+            // hjse
+            // 
+            this.hjse.DataPropertyName = "hjse";
+            this.hjse.HeaderText = "合计税额";
+            this.hjse.Name = "hjse";
+            this.hjse.ReadOnly = true;
+            // 
+            // jshj
+            // 
+            this.jshj.DataPropertyName = "jshj";
+            this.jshj.HeaderText = "价税合计";
+            this.jshj.Name = "jshj";
+            this.jshj.ReadOnly = true;
+            this.jshj.Width = 120;
+            // 
+            // billNumber
+            // 
+            this.billNumber.DataPropertyName = "billNumber";
+            this.billNumber.HeaderText = "附件数";
+            this.billNumber.Name = "billNumber";
+            // 
+            // bz
+            // 
+            this.bz.DataPropertyName = "bz";
+            this.bz.HeaderText = "备注";
+            this.bz.Name = "bz";
+            // 
+            // xhdwsbh
+            // 
+            this.xhdwsbh.DataPropertyName = "xhdwsbh";
+            this.xhdwsbh.HeaderText = "销货单位识别号";
+            this.xhdwsbh.Name = "xhdwsbh";
+            this.xhdwsbh.ReadOnly = true;
+            // 
+            // xhdwmc
+            // 
+            this.xhdwmc.DataPropertyName = "xhdwmc";
+            this.xhdwmc.HeaderText = "销货单位名称";
+            this.xhdwmc.Name = "xhdwmc";
+            this.xhdwmc.ReadOnly = true;
+            // 
+            // ghdwsbh
+            // 
+            this.ghdwsbh.DataPropertyName = "ghdwsbh";
+            this.ghdwsbh.HeaderText = "购货单位识别号";
+            this.ghdwsbh.Name = "ghdwsbh";
+            this.ghdwsbh.ReadOnly = true;
+            // 
+            // ghdwmc
+            // 
+            this.ghdwmc.DataPropertyName = "ghdwmc";
+            this.ghdwmc.HeaderText = "购货单位名称";
+            this.ghdwmc.Name = "ghdwmc";
+            this.ghdwmc.ReadOnly = true;
+            // 
+            // ykfsje
+            // 
+            this.ykfsje.DataPropertyName = "ykfsje";
+            this.ykfsje.HeaderText = "已开负数金额";
+            this.ykfsje.Name = "ykfsje";
+            this.ykfsje.ReadOnly = true;
+            // 
             // FormInvoiceExport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -521,22 +528,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fpdm;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fphm;
-        private System.Windows.Forms.DataGridViewTextBoxColumn xh;
-        private System.Windows.Forms.DataGridViewTextBoxColumn scbz;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fpzt;
-        private System.Windows.Forms.DataGridViewTextBoxColumn kprq;
-        private System.Windows.Forms.DataGridViewTextBoxColumn zhsl;
-        private System.Windows.Forms.DataGridViewTextBoxColumn hjje;
-        private System.Windows.Forms.DataGridViewTextBoxColumn hjse;
-        private System.Windows.Forms.DataGridViewTextBoxColumn jshj;
-        private System.Windows.Forms.DataGridViewTextBoxColumn bz;
-        private System.Windows.Forms.DataGridViewTextBoxColumn xhdwsbh;
-        private System.Windows.Forms.DataGridViewTextBoxColumn xhdwmc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ghdwsbh;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ghdwmc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ykfsje;
         private System.Windows.Forms.DataGridViewTextBoxColumn fphxz;
         private System.Windows.Forms.DataGridViewTextBoxColumn spmc;
         private System.Windows.Forms.DataGridViewTextBoxColumn spsm;
@@ -550,5 +541,22 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn item_fpdm;
         private System.Windows.Forms.DataGridViewTextBoxColumn item_xh;
         private System.Windows.Forms.DataGridViewTextBoxColumn hsbz;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fpdm;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fphm;
+        private System.Windows.Forms.DataGridViewTextBoxColumn xh;
+        private System.Windows.Forms.DataGridViewTextBoxColumn scbz;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fpzt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn kprq;
+        private System.Windows.Forms.DataGridViewTextBoxColumn zhsl;
+        private System.Windows.Forms.DataGridViewTextBoxColumn hjje;
+        private System.Windows.Forms.DataGridViewTextBoxColumn hjse;
+        private System.Windows.Forms.DataGridViewTextBoxColumn jshj;
+        private System.Windows.Forms.DataGridViewTextBoxColumn billNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn bz;
+        private System.Windows.Forms.DataGridViewTextBoxColumn xhdwsbh;
+        private System.Windows.Forms.DataGridViewTextBoxColumn xhdwmc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ghdwsbh;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ghdwmc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ykfsje;
     }
 }

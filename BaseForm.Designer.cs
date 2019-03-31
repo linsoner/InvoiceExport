@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BaseForm));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -39,15 +38,12 @@
             this.menuSet = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mainPanel = new System.Windows.Forms.Panel();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip1.SuspendLayout();
+            this.menuSDSetting = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(908, 25);
@@ -65,8 +61,9 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuInvoiceExport,
             this.menuSet,
+            this.menuSDSetting,
+            this.menuInvoiceExport,
             this.menuAbout});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -78,14 +75,14 @@
             // 
             this.menuInvoiceExport.Name = "menuInvoiceExport";
             this.menuInvoiceExport.Size = new System.Drawing.Size(68, 21);
-            this.menuInvoiceExport.Text = "发票导出";
+            this.menuInvoiceExport.Text = "发票管理";
             this.menuInvoiceExport.Click += new System.EventHandler(this.menuInvoiceExport_Click);
             // 
             // menuSet
             // 
             this.menuSet.Name = "menuSet";
-            this.menuSet.Size = new System.Drawing.Size(44, 21);
-            this.menuSet.Text = "设置";
+            this.menuSet.Size = new System.Drawing.Size(80, 21);
+            this.menuSet.Text = "税控盘设置";
             this.menuSet.Click += new System.EventHandler(this.toolStripLabelSet_Click);
             // 
             // menuAbout
@@ -103,14 +100,12 @@
             this.mainPanel.Size = new System.Drawing.Size(908, 378);
             this.mainPanel.TabIndex = 3;
             // 
-            // toolStripButton1
+            // menuSDSetting
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.menuSDSetting.Name = "menuSDSetting";
+            this.menuSDSetting.Size = new System.Drawing.Size(68, 21);
+            this.menuSDSetting.Text = "速达设置";
+            this.menuSDSetting.Click += new System.EventHandler(this.menuSDSetting_Click);
             // 
             // BaseForm
             // 
@@ -124,8 +119,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "BaseForm";
             this.Text = "百旺发票导出";
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -139,10 +132,10 @@
         private System.Windows.Forms.ToolStripMenuItem menuSet;
         private System.Windows.Forms.ToolStripMenuItem menuAbout;
         protected System.Windows.Forms.MenuStrip menuStrip1;
-        protected System.Windows.Forms.ToolStrip toolStrip1;
         protected System.Windows.Forms.StatusStrip statusStrip1;
         protected System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.ToolStripMenuItem menuInvoiceExport;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        protected System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripMenuItem menuSDSetting;
     }
 }
