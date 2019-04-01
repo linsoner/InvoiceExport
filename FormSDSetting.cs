@@ -78,7 +78,14 @@ namespace BaiwangExport
 
         void GetData()
         {
-            dataGridView1.DataSource = SD3000.GetConnectionTable();
+            try
+            {
+                dataGridView1.DataSource = SD3000.GetConnectionTable();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n" + ex.StackTrace + "\r\nGetData");
+            }
         }
 
         void SaveData()

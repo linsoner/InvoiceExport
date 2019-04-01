@@ -88,7 +88,7 @@ namespace BaiwangExport
         private void btnToSDInvoice_Click(object sender, EventArgs e)
         {  //todo:20190331
             FormCredence cred = new FormCredence();
-            cred.SetConnString("");
+            cred.InitialDataSource("");
         }
         private void btnExport_Click(object sender, EventArgs e)
         {

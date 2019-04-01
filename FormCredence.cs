@@ -26,13 +26,56 @@ namespace BaiwangExport
             
         }
 
-        public void SetConnString(string connString)
+        public void InitialDataSource(string connString)
         {
             ConnString = connString;
+            try
+            {
+                GetAccounts();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n" + ex.StackTrace + "\r\nInitialDataSource");
+            }
+        }
+
+        /// <summary>
+        /// 获取速达账套
+        /// </summary>
+        public void GetAccounts()
+        {
+            DataTable table = SD3000.GetAccounts(ConnString);
+            if (table != null)
+            {
+                cboAccount.DataSource = table;
+                cboAccount.DisplayMember = "AccSetName";
+                cboAccount.ValueMember = "AccSetCode";
+                cboAccount.SelectedIndexChanged += CboAccount_SelectedIndexChanged;
+            }
+        }
+
+        private void CboAccount_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            #region 根据选择的账套修改数据库连接字符串
+            string dbSuffix = string.Empty;
+            dbSuffix = cboAccount.SelectedValue.ToString();
+            if (string.IsNullOrWhiteSpace(dbSuffix)) return;
+
+            string[] s = ConnString.Split(';');
+            if (s.Length < 4) return;
+            string[] s2 = s[1].Split('=');
+            if (s2.Length < 2) return;
+
+            string dbName = s2[1].Substring(0, s2[1].LastIndexOf('_')) + dbSuffix;
+
+            ConnString = s[0] + ";" + s2[0] + "=" + dbName + ";" + s[2] + ";" + s[3];
+            #endregion 根据选择的账套修改数据库连接字符串
+
             GetSubjects();
             GetCredTypes();
             GetOperator();
         }
+
         public void GetSubjects()
         {
             if (string.IsNullOrWhiteSpace(ConnString))
@@ -79,7 +122,12 @@ namespace BaiwangExport
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if(cboCredType.SelectedIndex == -1)
+            if (cboAccount.SelectedIndex == -1)
+            {
+                MessageBox.Show("请选择要导入的账套");
+                cboAccount.Focus();
+            }
+            if (cboCredType.SelectedIndex == -1)
             {
                 MessageBox.Show("请选择凭证字");
                 cboCredType.Focus();
