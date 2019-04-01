@@ -14,22 +14,42 @@ namespace BaiwangExport
     {
         public static void SaveToFile(byte[] value, string filePath)
         {
-            System.IO.FileStream fs = new System.IO.FileStream(filePath, System.IO.FileMode.OpenOrCreate);
-            fs.Write(value, 0, value.Length);
-            fs.Flush();
-            fs.Close();
+            using (System.IO.FileStream fs = new System.IO.FileStream(filePath, System.IO.FileMode.OpenOrCreate))
+            {
+                fs.Write(value, 0, value.Length);
+                fs.Flush();
+                fs.Close();
+            }
         }
 
         public static byte[] GetBytesFromFile(string filePath)
         {
-            System.IO.Stream theStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            int b1;
-            System.IO.MemoryStream tempStream = new System.IO.MemoryStream();
-            while ((b1 = theStream.ReadByte()) != -1)
+            System.IO.Stream theStream = null;
+            System.IO.MemoryStream tempStream = null;
+            try
             {
-                tempStream.WriteByte(((byte)b1));
+                theStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                int b1;
+                tempStream = new System.IO.MemoryStream();
+                while ((b1 = theStream.ReadByte()) != -1)
+                {
+                    tempStream.WriteByte(((byte)b1));
+                }
+                return tempStream.ToArray();
             }
-            return tempStream.ToArray();
+            catch(Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (theStream != null)
+                    theStream.Close();
+                if (tempStream != null)
+                    tempStream.Close();
+            }
+
+            return null;
         }
         public static byte[] ConvertDataTableToBytes(DataTable dt)
         {

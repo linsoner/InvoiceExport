@@ -86,9 +86,25 @@ namespace BaiwangExport
 
         }
         private void btnToSDInvoice_Click(object sender, EventArgs e)
-        {  //todo:20190331
-            FormCredence cred = new FormCredence();
-            cred.InitialDataSource("");
+        {
+            try
+            {
+                DataTable table = SD3000.GetConnectionTable();
+                string server = table.Rows[0]["server"].ToString();
+                string dbName = table.Rows[0]["accset"].ToString();
+                string dbUser = table.Rows[0]["dbUser"].ToString();
+                string password = table.Rows[0]["password"].ToString();
+                bool integratedSecurity = false;
+                bool.TryParse(table.Rows[0]["integratedSecurity"].ToString(), out integratedSecurity);
+                string connString = DBHelper.GetConnectionString(server, dbName, dbUser, password, integratedSecurity);
+
+                FormCredence cred = new FormCredence();
+                cred.InitialDataSource(connString);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         private void btnExport_Click(object sender, EventArgs e)
         {
@@ -206,11 +222,6 @@ namespace BaiwangExport
             tbtnToSD3000Invoive.ImageTransparentColor = System.Drawing.Color.Magenta;
             tbtnToSD3000Invoive.Click += btnToSDInvoice_Click;
             toolStrip1.Items.Add(tbtnToSD3000Invoive);
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }
