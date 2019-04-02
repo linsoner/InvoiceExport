@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace BaiwangExport
 {
-    public partial class FormCredence : Form
+    public partial class FormCredence : BaseForm
     {
         string ConnString { get; set; }
 

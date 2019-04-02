@@ -110,11 +110,11 @@ namespace BaiwangExport
         /// <param name="subId_C">贷方科目</param>
         /// <param name="moneyId">货币</param>
         /// <returns></returns>
-        public static bool CreateCredence(string connSString,DataTable credence 
+        public static int CreateCredence(string connSString,DataTable credence 
             ,int credType, DateTime credDate,string billMaker
             ,int subId_D,int subId_Tax, int subId_C,int moneyId)
         {
-            bool success = false;
+            int successCount = 0;
 
             if (string.IsNullOrWhiteSpace(connSString))
                 throw new ArgumentNullException("数据库连接字符串不能为空！");
@@ -127,7 +127,7 @@ namespace BaiwangExport
             string fEndDate = Utility.GetLastDayOfMonth(credDate).ToString("yyyy-MM-dd");
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("declare @CredID varchar(30),@CredNo int,@CredCode int");
+            string sqlDeclare = "declare @CredID varchar(30),@CredNo int,@CredCode int,@subID_D int";
             string sqlCredID = "select @CredID=isnull(max(CredID), 100000000000)+1 from Credence where credid like '____________'"
                               + " set @CredID=isnull(@CredID,100000000000) ";
             string sqlCredNo = string.Format("SELECT  @CredNo=Max(CredNo)+1 from Credence "
@@ -155,8 +155,13 @@ namespace BaiwangExport
                 + ",rawcredit=0,debit={1},credit={2},moneyid={3}"
                 + ",subid={4},brief='{5}')";
 
+            DBHelper dbHelper = new DBHelper(connSString);
+            
             for (int i = 0; i < credence.Rows.Count; i++)
             {
+                sb.Length = 0;
+
+                sb.AppendLine(sqlDeclare);
                 sb.AppendLine(sqlCredID);
                 sb.AppendLine(sqlCredNo);
                 int fbillNumber = 0;
@@ -183,9 +188,20 @@ namespace BaiwangExport
                 fenluno++;
                 sb.AppendFormat(sqlcredItem, fenluno.ToString(), "0", credit.ToString(), moneyId.ToString(), subId_C.ToString()
                     , brief);
+
+                try
+                {
+                    dbHelper.ExecuteNonQuery(sb.ToString());
+                    successCount++;
+                    credence.Rows[i]["msg"] = "成功";
+                }
+                catch (Exception ex)
+                {
+                    credence.Rows[i]["msg"] = "失败：" + ex.Message;
+                }
             }
 
-            return success;
+            return successCount;
         }
 
         /// <summary>
