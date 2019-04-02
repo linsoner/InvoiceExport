@@ -100,6 +100,7 @@ namespace BaiwangExport
 
                 FormCredence cred = new FormCredence();
                 cred.InitialDataSource(connString);
+                cred.Show();
             }
             catch(Exception ex)
             {

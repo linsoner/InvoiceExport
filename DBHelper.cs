@@ -160,7 +160,7 @@ namespace BaiwangExport
             this.adapter = new SqlDataAdapter(sqlStr, this.conn);
             DataTable table = new DataTable();
             try { adapter.Fill(table); }
-            catch (SqlException e) { throw new Exception(e.Message); }
+            catch (SqlException e) { throw e; }
             finally { this.adapter.Dispose(); }
             return table;
         }

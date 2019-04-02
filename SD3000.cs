@@ -44,12 +44,24 @@ namespace BaiwangExport
         /// <returns></returns>
         public static DataTable GetSDSysDb(string connectionString)
         {
-            string sql = "Select Name  FROM Master.dbo.SysDatabases "
-                + " where name like 'SD%' and  name like '%SDAccset' "
-                + " ORDER BY Name ";
+            string sql = "Select name  FROM Master.dbo.SysDatabases "
+                + " where name like '%SDAccset'";
             DBHelper dbHelper = new DBHelper(connectionString);
 
-            return dbHelper.GetDataTable(sql);
+            DataTable table= dbHelper.GetDataTable(sql);
+            if (table == null)
+                table = GetInitailSysDb();
+            return table;
+        }
+        public static DataTable GetInitailSysDb()
+        {
+            DataTable table = new DataTable();
+            DataColumn column = new DataColumn("name", typeof(string));
+            table.Columns.Add(column);
+            DataRow row = table.NewRow();
+            row["name"] = "";
+            table.Rows.Add(row);
+            return table;
         }
 
         /// <summary>
@@ -64,7 +76,7 @@ namespace BaiwangExport
             DataTable table = null;
             try
             {
-                dbHelper.GetDataTable(sql);
+                table = dbHelper.GetDataTable(sql);
             }
             catch(Exception ex)
             {

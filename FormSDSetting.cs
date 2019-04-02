@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -18,16 +19,23 @@ namespace BaiwangExport
         {
             InitializeComponent();
             dataGridView1.DataError += DataGridView1_DataError;
+            dataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
-            _AccountTable = SD3000.GetInitailAccounts();
-            accset.DataSource = _AccountTable;
-            accset.DisplayMember = "corpname";
-            accset.ValueMember = "accsetname";
-            accset.DataPropertyName = "accset";
             GetData();
 
             SetEditeBtn(false);
 
+        }
+
+        private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            ComboBox cbo = e.Control as ComboBox;
+            if(cbo!=null && _AccountTable != null)
+            {
+                cbo.DataSource = _AccountTable;
+                cbo.DisplayMember = "name";
+                cbo.ValueMember = "name";
+            }
         }
 
         private void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -76,6 +84,13 @@ namespace BaiwangExport
         {
             try
             {
+                DataTable table = SD3000.GetConnectionTable();
+                if (table.Rows.Count > 0)
+                {
+                    accset.Items.Add(table.Rows[0]["accset"].ToString());
+                    dataGridView1.AllowUserToAddRows = false;
+                    
+                }
                 dataGridView1.DataSource = SD3000.GetConnectionTable();
             }
             catch(Exception ex)
@@ -114,7 +129,7 @@ namespace BaiwangExport
         private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             string fieldName = dataGridView1.Columns[e.ColumnIndex].DataPropertyName.ToLower();
-            if (fieldName.Equals("dbuser") || fieldName.Equals("password"))
+            if (fieldName.Equals("integratedSecurity") || fieldName.Equals("password"))
             {
                 String server = dataGridView1.CurrentRow.Cells["server"].Value.ToString();
                 string dbUser = dataGridView1.CurrentRow.Cells["dbUser"].Value.ToString();
@@ -122,18 +137,21 @@ namespace BaiwangExport
                 bool IntegratedSecurity = false;
                 bool.TryParse(dataGridView1.CurrentRow.Cells["integratedSecurity"].Value.ToString()
                     , out IntegratedSecurity);
-                if (!string.IsNullOrWhiteSpace(dbUser) && !string.IsNullOrWhiteSpace(dbUser))
+                if (!string.IsNullOrWhiteSpace(password) || IntegratedSecurity)
                 {
                     string connString = DBHelper.GetConnectionString(server, "master", dbUser, password, IntegratedSecurity);
                     try
                     {
                         _AccountTable = SD3000.GetSDSysDb(connString);
                     }
+                    catch(SqlException e1)
+                    {
+                        
+                    }
                     catch(Exception ex)
                     {
                         MessageBox.Show(ex.Message);
                     }
-                    accset.DataSource = _AccountTable;
                 }
             }
         }

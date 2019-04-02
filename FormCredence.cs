@@ -48,8 +48,8 @@ namespace BaiwangExport
             if (table != null)
             {
                 cboAccount.DataSource = table;
-                cboAccount.DisplayMember = "AccSetName";
-                cboAccount.ValueMember = "AccSetCode";
+                cboAccount.DisplayMember = "corpname";
+                cboAccount.ValueMember = "accsetname";
                 cboAccount.SelectedIndexChanged += CboAccount_SelectedIndexChanged;
             }
         }
@@ -66,7 +66,7 @@ namespace BaiwangExport
             string[] s2 = s[1].Split('=');
             if (s2.Length < 2) return;
 
-            string dbName = s2[1].Substring(0, s2[1].LastIndexOf('_')) + dbSuffix;
+            string dbName = s2[1].Substring(0, s2[1].LastIndexOf('_')+1) + dbSuffix;
 
             ConnString = s[0] + ";" + s2[0] + "=" + dbName + ";" + s[2] + ";" + s[3];
             #endregion 根据选择的账套修改数据库连接字符串
