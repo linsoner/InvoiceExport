@@ -109,7 +109,7 @@
             // 
             this.btnGetSub.Location = new System.Drawing.Point(764, 46);
             this.btnGetSub.Name = "btnGetSub";
-            this.btnGetSub.Size = new System.Drawing.Size(75, 23);
+            this.btnGetSub.Size = new System.Drawing.Size(113, 23);
             this.btnGetSub.TabIndex = 27;
             this.btnGetSub.Text = "获取应收账款科目";
             this.btnGetSub.UseVisualStyleBackColor = true;
@@ -118,9 +118,9 @@
             // 
             this.btnOK.Location = new System.Drawing.Point(764, 84);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.Size = new System.Drawing.Size(113, 23);
             this.btnOK.TabIndex = 26;
-            this.btnOK.Text = "确定";
+            this.btnOK.Text = "转凭证";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
             // label6

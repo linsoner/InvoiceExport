@@ -23,7 +23,7 @@ namespace BaiwangExport
         public FormCredence()
         {
             InitializeComponent();
-            
+            cboAccount.SelectedIndexChanged += CboAccount_SelectedIndexChanged;
         }
 
         public void InitialDataSource(string connString)
@@ -50,7 +50,7 @@ namespace BaiwangExport
                 cboAccount.DataSource = table;
                 cboAccount.DisplayMember = "corpname";
                 cboAccount.ValueMember = "accsetname";
-                cboAccount.SelectedIndexChanged += CboAccount_SelectedIndexChanged;
+                
             }
         }
 
