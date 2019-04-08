@@ -8,6 +8,9 @@ using System.IO;
 
 namespace BaiwangExport
 {
+    /// <summary>
+    /// 税控盘信息
+    /// </summary>
     public class Company
     {
         static string filePath = Path.Combine(System.Environment.CurrentDirectory, "settings.dat");

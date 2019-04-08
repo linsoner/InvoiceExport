@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,10 +18,29 @@ namespace BaiwangExport
         public FormSDSetting()
         {
             InitializeComponent();
-            //dataGridView1.CellFormatting += dataGridView1_CellFormatting;
+            dataGridView1.DataError += DataGridView1_DataError;
+            dataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
             GetData();
+
             SetEditeBtn(false);
+
+        }
+
+        private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            ComboBox cbo = e.Control as ComboBox;
+            if(cbo!=null && _AccountTable != null)
+            {
+                cbo.DataSource = _AccountTable;
+                cbo.DisplayMember = "name";
+                cbo.ValueMember = "name";
+            }
+        }
+
+        private void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -31,12 +51,13 @@ namespace BaiwangExport
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
+            GetData();
             SetEditeBtn(true);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            GetData();
+            
             SetEditeBtn(false);
         }
 
@@ -47,23 +68,6 @@ namespace BaiwangExport
                 return;
 
             dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
-        }
-
-        /// <summary>
-        /// 单元格显示格式事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            // 把第4列显示*号，*号的个数和实际数据的长度相同
-            if (dataGridView1.Columns[e.ColumnIndex].Name.Equals("password"))
-            {
-                if (e.Value != null && e.Value.ToString().Length > 0)
-                {
-                    e.Value = new string('*', e.Value.ToString().Length);
-                }
-            }
         }
 
         private void toolStripLabelSet_Click(object sender, EventArgs e)
@@ -80,6 +84,13 @@ namespace BaiwangExport
         {
             try
             {
+                DataTable table = SD3000.GetConnectionTable();
+                if (table.Rows.Count > 0)
+                {
+                    accset.Items.Add(table.Rows[0]["accset"].ToString());
+                    dataGridView1.AllowUserToAddRows = false;
+                    
+                }
                 dataGridView1.DataSource = SD3000.GetConnectionTable();
             }
             catch(Exception ex)
@@ -117,17 +128,30 @@ namespace BaiwangExport
 
         private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.Columns[e.ColumnIndex].Equals("dbUser") || dataGridView1.Columns[e.ColumnIndex].Equals("password"))
+            string fieldName = dataGridView1.Columns[e.ColumnIndex].DataPropertyName.ToLower();
+            if (fieldName.Equals("integratedSecurity") || fieldName.Equals("password"))
             {
-                String server = dataGridView1.CurrentRow.Cells["server"].ToString();
-                string dbUser = dataGridView1.CurrentRow.Cells["dbUser"].ToString();
-                string password = dataGridView1.CurrentRow.Cells["password"].ToString();
+                String server = dataGridView1.CurrentRow.Cells["server"].Value.ToString();
+                string dbUser = dataGridView1.CurrentRow.Cells["dbUser"].Value.ToString();
+                string password = dataGridView1.CurrentRow.Cells["password"].Value.ToString();
                 bool IntegratedSecurity = false;
-                    bool.TryParse(dataGridView1.CurrentRow.Cells["integratedSecurity"].ToString(), out IntegratedSecurity);
-                if (!string.IsNullOrWhiteSpace(dbUser) && !string.IsNullOrWhiteSpace(dbUser))
+                bool.TryParse(dataGridView1.CurrentRow.Cells["integratedSecurity"].Value.ToString()
+                    , out IntegratedSecurity);
+                if (!string.IsNullOrWhiteSpace(password) || IntegratedSecurity)
                 {
                     string connString = DBHelper.GetConnectionString(server, "master", dbUser, password, IntegratedSecurity);
-                    _AccountTable = SD3000.GetSDSysDb(connString);
+                    try
+                    {
+                        _AccountTable = SD3000.GetSDSysDb(connString);
+                    }
+                    catch(SqlException e1)
+                    {
+                        
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
         }

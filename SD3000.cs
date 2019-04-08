@@ -44,12 +44,24 @@ namespace BaiwangExport
         /// <returns></returns>
         public static DataTable GetSDSysDb(string connectionString)
         {
-            string sql = "Select Name  FROM Master.dbo.SysDatabases "
-                + " where name like 'SD%' and  name like '%SDAccset' "
-                + " ORDER BY Name ";
+            string sql = "Select name  FROM Master.dbo.SysDatabases "
+                + " where name like '%SDAccset'";
             DBHelper dbHelper = new DBHelper(connectionString);
 
-            return dbHelper.GetDataTable(sql);
+            DataTable table= dbHelper.GetDataTable(sql);
+            if (table == null)
+                table = GetInitailSysDb();
+            return table;
+        }
+        public static DataTable GetInitailSysDb()
+        {
+            DataTable table = new DataTable();
+            DataColumn column = new DataColumn("name", typeof(string));
+            table.Columns.Add(column);
+            DataRow row = table.NewRow();
+            row["name"] = "";
+            table.Rows.Add(row);
+            return table;
         }
 
         /// <summary>
@@ -61,7 +73,31 @@ namespace BaiwangExport
         {
             DBHelper dbHelper = new DBHelper(connectionString);
             string sql = "select accsetname,corpname from dbo.accset";
-            return dbHelper.GetDataTable(sql);
+            DataTable table = null;
+            try
+            {
+                table = dbHelper.GetDataTable(sql);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
+            return table;
+        }
+
+        public static DataTable GetInitailAccounts()
+        {
+            DataTable table = new DataTable();
+            DataColumn column = new DataColumn("accsetname", typeof(string));
+            table.Columns.Add(column);
+            column = new DataColumn("corpname", typeof(string));
+            table.Columns.Add(column);
+            DataRow row = table.NewRow();
+            row["accsetname"] = "";
+            row["corpname"] = "";
+            table.Rows.Add(row);
+            return table;
         }
 
         public static DataTable InitConnectionDataTable()
@@ -83,7 +119,7 @@ namespace BaiwangExport
             column.DefaultValue = "Qq123456";
             table.Columns.Add(column);
 
-            column = new DataColumn("accsetDb", typeof(string));
+            column = new DataColumn("accset", typeof(string));
             column.Caption = "帐套数据库";
             column.DefaultValue = "SD11211N_SDAccset";
             table.Columns.Add(column);
