@@ -23,7 +23,7 @@ namespace BaiwangExport
         public FormCredence()
         {
             InitializeComponent();
-            
+            cboAccount.SelectedIndexChanged += CboAccount_SelectedIndexChanged;
         }
 
         public void InitialDataSource(string connString)
@@ -50,7 +50,6 @@ namespace BaiwangExport
                 cboAccount.DataSource = table;
                 cboAccount.DisplayMember = "corpname";
                 cboAccount.ValueMember = "accsetname";
-                cboAccount.SelectedIndexChanged += CboAccount_SelectedIndexChanged;
             }
         }
 
@@ -71,9 +70,16 @@ namespace BaiwangExport
             ConnString = s[0] + ";" + s2[0] + "=" + dbName + ";" + s[2] + ";" + s[3];
             #endregion 根据选择的账套修改数据库连接字符串
 
-            GetSubjects();
-            GetCredTypes();
-            GetOperator();
+            try
+            {
+                GetSubjects();
+                GetCredTypes();
+                GetOperator();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public void GetSubjects()
@@ -126,26 +132,31 @@ namespace BaiwangExport
             {
                 MessageBox.Show("请选择要导入的账套");
                 cboAccount.Focus();
+                return;
             }
             if (cboCredType.SelectedIndex == -1)
             {
                 MessageBox.Show("请选择凭证字");
                 cboCredType.Focus();
+                return;
             }
             if (cboBiller.SelectedIndex == -1)
             {
                 MessageBox.Show("请选择制单人");
                 cboBiller.Focus();
+                return;
             }
             if (cboIncomeSubject.SelectedIndex == -1)
             {
                 MessageBox.Show("请选择主营业务收入科目");
                 cboIncomeSubject.Focus();
+                return;
             }
             if (cboTaxSSubject.SelectedIndex == -1)
             {
                 MessageBox.Show("请选择应交税费科目");
                 cboTaxSSubject.Focus();
+                return;
             }
 
             int credtype = -1;
@@ -164,5 +175,30 @@ namespace BaiwangExport
 
             CredDate = dteCredDate.Value;
     }
+
+        private void btnGetSub_Click(object sender, EventArgs e)
+        {
+            if (cboAccount.SelectedIndex == -1)
+            {
+                if (cboAccount.SelectedIndex == -1)
+                {
+                    MessageBox.Show("请选择要导入的账套");
+                    cboAccount.Focus();
+                    return;
+                }
+            }
+
+            DataTable table = dataGridView1.DataSource as DataTable;
+            if(table == null)
+            {
+                MessageBox.Show("细表资料为空，无法获取科目");
+                return;
+            }
+
+            foreach(DataRow row in table.Rows)
+            {
+                D
+            }
+        }
     }
 }
