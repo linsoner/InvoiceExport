@@ -44,6 +44,12 @@
             this.cboCredType = new System.Windows.Forms.ComboBox();
             this.lblCredType = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.fSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.brief = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.billNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.purchar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tax = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.debit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -85,13 +91,13 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
             this.splitContainer1.Size = new System.Drawing.Size(1264, 610);
-            this.splitContainer1.SplitterDistance = 130;
+            this.splitContainer1.SplitterDistance = 120;
             this.splitContainer1.TabIndex = 0;
             // 
             // cboAccount
             // 
             this.cboAccount.FormattingEnabled = true;
-            this.cboAccount.Location = new System.Drawing.Point(126, 19);
+            this.cboAccount.Location = new System.Drawing.Point(126, 9);
             this.cboAccount.Name = "cboAccount";
             this.cboAccount.Size = new System.Drawing.Size(348, 20);
             this.cboAccount.TabIndex = 29;
@@ -99,7 +105,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(60, 22);
+            this.label5.Location = new System.Drawing.Point(60, 12);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 28;
@@ -107,18 +113,19 @@
             // 
             // btnGetSub
             // 
-            this.btnGetSub.Location = new System.Drawing.Point(764, 46);
+            this.btnGetSub.Location = new System.Drawing.Point(597, 48);
             this.btnGetSub.Name = "btnGetSub";
-            this.btnGetSub.Size = new System.Drawing.Size(113, 23);
+            this.btnGetSub.Size = new System.Drawing.Size(150, 23);
             this.btnGetSub.TabIndex = 27;
             this.btnGetSub.Text = "获取应收账款科目";
             this.btnGetSub.UseVisualStyleBackColor = true;
+            this.btnGetSub.Click += new System.EventHandler(this.btnGetSub_Click);
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(764, 84);
+            this.btnOK.Location = new System.Drawing.Point(597, 83);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(113, 23);
+            this.btnOK.Size = new System.Drawing.Size(150, 23);
             this.btnOK.TabIndex = 26;
             this.btnOK.Text = "转凭证";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -126,32 +133,32 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(383, 95);
+            this.label6.Location = new System.Drawing.Point(13, 89);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(77, 12);
+            this.label6.Size = new System.Drawing.Size(101, 12);
             this.label6.TabIndex = 25;
-            this.label6.Text = "主营业务科目";
+            this.label6.Text = "主营业务收入科目";
             // 
             // cboIncomeSubject
             // 
             this.cboIncomeSubject.FormattingEnabled = true;
-            this.cboIncomeSubject.Location = new System.Drawing.Point(475, 90);
+            this.cboIncomeSubject.Location = new System.Drawing.Point(125, 85);
             this.cboIncomeSubject.Name = "cboIncomeSubject";
-            this.cboIncomeSubject.Size = new System.Drawing.Size(234, 20);
+            this.cboIncomeSubject.Size = new System.Drawing.Size(349, 20);
             this.cboIncomeSubject.TabIndex = 24;
             // 
             // cboTaxSSubject
             // 
             this.cboTaxSSubject.FormattingEnabled = true;
-            this.cboTaxSSubject.Location = new System.Drawing.Point(125, 90);
+            this.cboTaxSSubject.Location = new System.Drawing.Point(125, 59);
             this.cboTaxSSubject.Name = "cboTaxSSubject";
-            this.cboTaxSSubject.Size = new System.Drawing.Size(227, 20);
+            this.cboTaxSSubject.Size = new System.Drawing.Size(349, 20);
             this.cboTaxSSubject.TabIndex = 23;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(36, 95);
+            this.label4.Location = new System.Drawing.Point(36, 63);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(77, 12);
             this.label4.TabIndex = 22;
@@ -160,7 +167,7 @@
             // cboBiller
             // 
             this.cboBiller.FormattingEnabled = true;
-            this.cboBiller.Location = new System.Drawing.Point(559, 55);
+            this.cboBiller.Location = new System.Drawing.Point(597, 12);
             this.cboBiller.Name = "cboBiller";
             this.cboBiller.Size = new System.Drawing.Size(150, 20);
             this.cboBiller.TabIndex = 21;
@@ -168,7 +175,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(512, 59);
+            this.label3.Location = new System.Drawing.Point(550, 16);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 12);
             this.label3.TabIndex = 20;
@@ -176,7 +183,7 @@
             // 
             // dteCredDate
             // 
-            this.dteCredDate.Location = new System.Drawing.Point(350, 53);
+            this.dteCredDate.Location = new System.Drawing.Point(350, 34);
             this.dteCredDate.Name = "dteCredDate";
             this.dteCredDate.Size = new System.Drawing.Size(124, 21);
             this.dteCredDate.TabIndex = 19;
@@ -184,7 +191,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(291, 59);
+            this.label2.Location = new System.Drawing.Point(291, 39);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 18;
@@ -193,7 +200,7 @@
             // cboCredType
             // 
             this.cboCredType.FormattingEnabled = true;
-            this.cboCredType.Location = new System.Drawing.Point(125, 54);
+            this.cboCredType.Location = new System.Drawing.Point(125, 34);
             this.cboCredType.Name = "cboCredType";
             this.cboCredType.Size = new System.Drawing.Size(121, 20);
             this.cboCredType.TabIndex = 17;
@@ -201,7 +208,7 @@
             // lblCredType
             // 
             this.lblCredType.AutoSize = true;
-            this.lblCredType.Location = new System.Drawing.Point(72, 57);
+            this.lblCredType.Location = new System.Drawing.Point(72, 37);
             this.lblCredType.Name = "lblCredType";
             this.lblCredType.Size = new System.Drawing.Size(41, 12);
             this.lblCredType.TabIndex = 16;
@@ -210,12 +217,68 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.fSelected,
+            this.brief,
+            this.billNumber,
+            this.purchar,
+            this.tax,
+            this.debit});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1264, 476);
+            this.dataGridView1.Size = new System.Drawing.Size(1264, 486);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // fSelected
+            // 
+            this.fSelected.DataPropertyName = "fSelected";
+            this.fSelected.FalseValue = "0";
+            this.fSelected.HeaderText = "选择";
+            this.fSelected.IndeterminateValue = "1";
+            this.fSelected.Name = "fSelected";
+            this.fSelected.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.fSelected.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.fSelected.TrueValue = "1";
+            this.fSelected.Width = 60;
+            // 
+            // brief
+            // 
+            this.brief.DataPropertyName = "brief";
+            this.brief.HeaderText = "摘要";
+            this.brief.Name = "brief";
+            this.brief.Width = 330;
+            // 
+            // billNumber
+            // 
+            this.billNumber.DataPropertyName = "billNumber";
+            this.billNumber.HeaderText = "附件数";
+            this.billNumber.Name = "billNumber";
+            this.billNumber.Width = 80;
+            // 
+            // purchar
+            // 
+            this.purchar.HeaderText = "购货单位";
+            this.purchar.Name = "purchar";
+            this.purchar.ReadOnly = true;
+            this.purchar.Width = 200;
+            // 
+            // tax
+            // 
+            this.tax.DataPropertyName = "tax";
+            this.tax.HeaderText = "税额";
+            this.tax.Name = "tax";
+            this.tax.ReadOnly = true;
+            this.tax.Width = 120;
+            // 
+            // debit
+            // 
+            this.debit.DataPropertyName = "debit";
+            this.debit.HeaderText = "含税金额";
+            this.debit.Name = "debit";
+            this.debit.ReadOnly = true;
+            this.debit.Width = 120;
             // 
             // FormCredence
             // 
@@ -253,5 +316,11 @@
         private System.Windows.Forms.ComboBox cboCredType;
         private System.Windows.Forms.Label lblCredType;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn fSelected;
+        private System.Windows.Forms.DataGridViewTextBoxColumn brief;
+        private System.Windows.Forms.DataGridViewTextBoxColumn billNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn purchar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tax;
+        private System.Windows.Forms.DataGridViewTextBoxColumn debit;
     }
 }

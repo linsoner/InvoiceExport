@@ -156,8 +156,6 @@ namespace BaiwangExport
                 throw new ArgumentNullException("数据库连接字符串不能为空！");
             if (credence == null && credence.Rows.Count==0)
                 throw new ArgumentNullException("凭证主表不能为空");
-            //if (credItem == null && credItem.Rows.Count == 0)
-            //    throw new ArgumentNullException("凭证细表不能为空！");
 
             string fStartDate = Utility.GetFirstDayOfMonth(credDate).ToString("yyyy-MM-dd");
             string fEndDate = Utility.GetLastDayOfMonth(credDate).ToString("yyyy-MM-dd");
@@ -181,11 +179,11 @@ namespace BaiwangExport
                     +",relevantbillid,credtypeid,updatetime)"
                     + "select credid=@CredID,shopid=0,credtype="+ credType.ToString().ToString() + ", rptid=20"
                     + ",credcode=@CredCode,credno=@CredNo,creddate='"+ credDate.ToString("yyyy-MM-dd") + "', billnumber={0}"
-                    + ",billmaker='"+ billMaker+"', billcheck='',billpost='',checkflag='F'"
+                    + ",billmaker='"+billMaker+"', billcheck='',billpost='',checkflag='F'"
                     + ",postflag='F',relevantbillid=1,credtypeid=0,updatetime=getdate()";
 
-            string sqlcredItem = "INSERT INTO dbo.CredItem (credid,fenluno,rate,rawdebit"
-                +",rawcredit,debit,credit,moneyid"
+            string sqlcredItem = "insert into dbo.CredItem (credid,fenluno,rate,rawdebit"
+                + ",rawcredit,debit,credit,moneyid"
                 +",subid,brief)"
                 + " select credid=@CredID,fenluno={0},rate=1,rawdebit=0"
                 + ",rawcredit=0,debit={1},credit={2},moneyid={3}"
@@ -206,16 +204,17 @@ namespace BaiwangExport
 
                 decimal debit = 0;
                 decimal.TryParse(credence.Rows[i]["debit"].ToString(), out debit);
-
-                decimal credit = 0;
-                decimal.TryParse(credence.Rows[i]["credit"].ToString(), out credit);
                 decimal tax = 0;
                 decimal.TryParse(credence.Rows[i]["tax"].ToString(), out tax);
-                string brief = credence.Rows[i]["debit"].ToString();
+                decimal credit = debit- tax;
+                //decimal.TryParse(credence.Rows[i]["credit"].ToString(), out credit);
+                string brief = credence.Rows[i]["brief"].ToString();
+                if (string.IsNullOrWhiteSpace(brief))
+                    brief = "应收账款";
                 int fenluno = 1;
                 sb.AppendFormat(sqlcredItem, fenluno.ToString(), debit.ToString(), "0", moneyId.ToString(), subId_D.ToString()
                     , brief);
-                if (subId_Tax > 0)
+                if (subId_Tax > 0 && tax!= 0)
                 {
                     fenluno++;
                     sb.AppendFormat(sqlcredItem, fenluno.ToString(), tax.ToString(), "0", moneyId.ToString(), subId_Tax.ToString()
