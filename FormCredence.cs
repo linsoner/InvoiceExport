@@ -19,7 +19,7 @@ namespace BaiwangExport
         public int Sub_Tax { get; set; }
         public DateTime CredDate { get; set; }
         public string BillMaker { get; set; }
-   
+
         public FormCredence()
         {
             InitializeComponent();
@@ -33,7 +33,7 @@ namespace BaiwangExport
             {
                 GetAccounts();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\r\n" + ex.StackTrace + "\r\nInitialDataSource");
             }
@@ -50,6 +50,7 @@ namespace BaiwangExport
                 cboAccount.DataSource = table;
                 cboAccount.DisplayMember = "corpname";
                 cboAccount.ValueMember = "accsetname";
+                cboAccount.SelectedIndexChanged += CboAccount_SelectedIndexChanged;
             }
         }
 
@@ -57,7 +58,11 @@ namespace BaiwangExport
         {
             #region 根据选择的账套修改数据库连接字符串
             string dbSuffix = string.Empty;
-            dbSuffix = cboAccount.SelectedValue.ToString();
+            DataRowView view = cboAccount.SelectedValue as DataRowView;
+            if (view != null)
+            {
+                dbSuffix = view["accsetname"].ToString();
+            }
             if (string.IsNullOrWhiteSpace(dbSuffix)) return;
 
             string[] s = ConnString.Split(';');
@@ -65,7 +70,7 @@ namespace BaiwangExport
             string[] s2 = s[1].Split('=');
             if (s2.Length < 2) return;
 
-            string dbName = s2[1].Substring(0, s2[1].LastIndexOf('_')+1) + dbSuffix;
+            string dbName = s2[1].Substring(0, s2[1].LastIndexOf('_') + 1) + dbSuffix;
 
             ConnString = s[0] + ";" + s2[0] + "=" + dbName + ";" + s[2] + ";" + s[3];
             #endregion 根据选择的账套修改数据库连接字符串
@@ -88,26 +93,29 @@ namespace BaiwangExport
                 throw new ArgumentNullException("数据库链接字符串不能为空！");
 
             DataTable subjects = SD3000.GetSubjects(ConnString);
-            if(subjects!=null)
+            if (subjects != null)
             {
                 DataTable table = subjects.Copy();
 
                 cboTaxSSubject.DataSource = table;
                 cboTaxSSubject.DisplayMember = "displayname";
                 cboTaxSSubject.ValueMember = "subid";
-                //DataRow[] rows = table.Select("")
-                cboTaxSSubject.SelectedItem = table.Select("subcode='2221001'").First();
+                DataRow[] rows = table.Select("subcode='2221001005'");
+                if (rows.Length > 0)
+                    cboTaxSSubject.SelectedIndex = table.Rows.IndexOf(rows[0]);
 
                 cboIncomeSubject.DataSource = subjects;
                 cboIncomeSubject.DisplayMember = "displayname";
                 cboIncomeSubject.ValueMember = "subid";
-                cboIncomeSubject.SelectedItem = table.Select("subcode='5001'").First();
+                DataRow[] rows2 = subjects.Select("subcode='6001'");
+                if (rows2.Length > 0)
+                    cboIncomeSubject.SelectedIndex = subjects.Rows.IndexOf(rows2[0]);
             }
         }
         public void GetCredTypes()
         {
             DataTable table = SD3000.GetCredTypes(ConnString);
-            if(table !=null)
+            if (table != null)
             {
                 cboCredType.DataSource = table;
                 cboCredType.DisplayMember = "name";
@@ -160,7 +168,7 @@ namespace BaiwangExport
             }
 
             int credtype = -1;
-            if(int.TryParse(cboCredType.SelectedValue.ToString(),out credtype))
+            if (int.TryParse(cboCredType.SelectedValue.ToString(), out credtype))
                 Credtype = credtype;
 
             int sub_C = -1;
@@ -171,34 +179,10 @@ namespace BaiwangExport
             if (int.TryParse(cboTaxSSubject.SelectedValue.ToString(), out sub_Tax))
                 Sub_Tax = sub_Tax;
 
-            BillMaker= cboBiller.SelectedValue.ToString();
+            BillMaker = cboBiller.SelectedValue.ToString();
 
             CredDate = dteCredDate.Value;
     }
-
-        private void btnGetSub_Click(object sender, EventArgs e)
-        {
-            if (cboAccount.SelectedIndex == -1)
-            {
-                if (cboAccount.SelectedIndex == -1)
-                {
-                    MessageBox.Show("请选择要导入的账套");
-                    cboAccount.Focus();
-                    return;
-                }
-            }
-
-            DataTable table = dataGridView1.DataSource as DataTable;
-            if(table == null)
-            {
-                MessageBox.Show("细表资料为空，无法获取科目");
-                return;
-            }
-
-            foreach(DataRow row in table.Rows)
-            {
-                D
-            }
-        }
     }
+
 }
