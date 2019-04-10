@@ -148,7 +148,7 @@ namespace BaiwangExport
         /// <returns></returns>
         public static int CreateCredence(string connSString,DataTable credence 
             ,int credType, DateTime credDate,string billMaker
-            ,int subId_D,int subId_Tax, int subId_C,int moneyId)
+            ,int subId_Tax, int subId_C,int moneyId)
         {
             int successCount = 0;
 
@@ -198,13 +198,14 @@ namespace BaiwangExport
                 sb.AppendLine(sqlDeclare);
                 sb.AppendLine(sqlCredID);
                 sb.AppendLine(sqlCredNo);
-                int fbillNumber = 0;
+                int fbillNumber = 0; //附件数
                 int.TryParse(credence.Rows[i]["billnumber"].ToString(), out fbillNumber);
                 sb.AppendFormat(sqlCredence, fbillNumber);
-
-                decimal debit = 0;
+                int subId_D = 0; //应收账款科目
+                    int.TryParse(credence.Rows[i]["subID_D"].ToString(), out fbillNumber);
+                decimal debit = 0; //含税金额
                 decimal.TryParse(credence.Rows[i]["debit"].ToString(), out debit);
-                decimal tax = 0;
+                decimal tax = 0; //税额
                 decimal.TryParse(credence.Rows[i]["tax"].ToString(), out tax);
                 decimal credit = debit- tax;
                 //decimal.TryParse(credence.Rows[i]["credit"].ToString(), out credit);
@@ -247,7 +248,7 @@ namespace BaiwangExport
         public static DataTable GetSubjects(string connectionString)
         {
             DBHelper dbHelper = new DBHelper(connectionString);
-            string sql = " Select  subid,subcode,name,fullname,displayname=subcode+fullname  from Subject "
+            string sql = " Select  subid,subcode,name,fullname,displayname=fullname  from Subject "
              + " where detailflag = 'T' and((specialcode <> '113' and specialcode <> '115' and specialcode <> '203' and specialcode <> '204') or specialcode is null) "  
              + "order by subcode ";
             return dbHelper.GetDataTable(sql);

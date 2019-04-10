@@ -10,8 +10,10 @@ using System.Windows.Forms;
 
 namespace BaiwangExport
 {
+    
     public partial class FormCredence : BaseForm
     {
+        DataTable _SubjectTable = null;
         string ConnString { get; set; }
 
         public int Credtype { get; set; }
@@ -26,12 +28,14 @@ namespace BaiwangExport
             cboAccount.SelectedIndexChanged += CboAccount_SelectedIndexChanged;
         }
 
-        public void InitialDataSource(string connString)
+        public void InitialDataSource(string connString,DataTable credenceTable)
         {
             ConnString = connString;
             try
             {
                 GetAccounts();
+                if(credenceTable != null)
+                    dataGridView1.DataSource = credenceTable;
             }
             catch (Exception ex)
             {
@@ -110,6 +114,11 @@ namespace BaiwangExport
                 DataRow[] rows2 = subjects.Select("subcode='6001'");
                 if (rows2.Length > 0)
                     cboIncomeSubject.SelectedIndex = subjects.Rows.IndexOf(rows2[0]);
+
+                _SubjectTable = table.Copy();
+                //subID_D_Name.DataSource = table.Copy();
+                //subID_D_Name.DisplayMember = "displayname";
+                //subID_D_Name.ValueMember = "subid";
             }
         }
         public void GetCredTypes()
@@ -171,18 +180,82 @@ namespace BaiwangExport
             if (int.TryParse(cboCredType.SelectedValue.ToString(), out credtype))
                 Credtype = credtype;
 
-            int sub_C = -1;
-            if (int.TryParse(cboIncomeSubject.SelectedValue.ToString(), out sub_C))
-                Sub_C = sub_C;
+            int subId_C = -1;
+            if (int.TryParse(cboIncomeSubject.SelectedValue.ToString(), out subId_C))
+                Sub_C = subId_C;
 
-            int sub_Tax = -1;
-            if (int.TryParse(cboTaxSSubject.SelectedValue.ToString(), out sub_Tax))
-                Sub_Tax = sub_Tax;
+            int subId_Tax = -1;
+            if (int.TryParse(cboTaxSSubject.SelectedValue.ToString(), out subId_Tax))
+                Sub_Tax = subId_Tax;
 
             BillMaker = cboBiller.SelectedValue.ToString();
 
             CredDate = dteCredDate.Value;
+
+            int moneyId = 0;
+
+            DataTable table = dataGridView1.DataSource as DataTable;
+            if(table==null || table.Rows.Count == 0)
+            {
+                MessageBox.Show("细表为空，无凭证可生成！");
+                return;
+            }
+
+            SD3000.CreateCredence(ConnString, table, credtype, CredDate, BillMaker, subId_Tax, subId_C, moneyId);
     }
+
+        private void btnGetSub_Click(object sender, EventArgs e)
+        {
+            if (cboAccount.SelectedIndex == -1)
+            {
+                if (cboAccount.SelectedIndex == -1)
+                {
+                    MessageBox.Show("请选择要导入的账套");
+                    cboAccount.Focus();
+                    return;
+                }
+            }
+
+            DataTable table = dataGridView1.DataSource as DataTable;
+            if (table == null || table.Rows.Count == 0)
+            {
+                MessageBox.Show("细表资料为空，无法获取科目");
+                return;
+            }
+
+            foreach (DataRow row in table.Rows)
+            {
+                
+            }
+        }
+
+        private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            ComboBox cbo = e.Control as ComboBox;
+            cbo.SelectedIndexChanged += Cbo_SelectedIndexChanged;
+            if (cbo != null && _SubjectTable != null)
+            {
+                cbo.DataSource = _SubjectTable;
+                cbo.DisplayMember = "displayname";
+                cbo.ValueMember = "subid";
+            }
+        }
+
+        private void Cbo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataGridViewRow row = dataGridView1.CurrentRow;
+            if (row == null)
+                return;
+
+            ComboBox cbo = sender as ComboBox;
+            if (cbo == null)
+                return;
+
+            DataRowView view = cbo.SelectedValue as DataRowView;
+            if (view == null) return;
+
+            row.Cells[""].Value = view["subid"];
+        }
     }
 
 }

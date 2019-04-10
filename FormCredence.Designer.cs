@@ -46,6 +46,8 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.fSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.brief = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.subID_D_Name = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.subID_D = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.billNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.purchar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tax = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -220,6 +222,8 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.fSelected,
             this.brief,
+            this.subID_D_Name,
+            this.subID_D,
             this.billNumber,
             this.purchar,
             this.tax,
@@ -249,6 +253,20 @@
             this.brief.HeaderText = "摘要";
             this.brief.Name = "brief";
             this.brief.Width = 330;
+            // 
+            // subID_D_Name
+            // 
+            this.subID_D_Name.DataPropertyName = "subID_D_Name";
+            this.subID_D_Name.HeaderText = "应收账款科目";
+            this.subID_D_Name.Name = "subID_D_Name";
+            this.subID_D_Name.Width = 250;
+            // 
+            // subID_D
+            // 
+            this.subID_D.DataPropertyName = "subID_D";
+            this.subID_D.HeaderText = "科目ID";
+            this.subID_D.Name = "subID_D";
+            this.subID_D.Visible = false;
             // 
             // billNumber
             // 
@@ -318,6 +336,8 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn fSelected;
         private System.Windows.Forms.DataGridViewTextBoxColumn brief;
+        private System.Windows.Forms.DataGridViewComboBoxColumn subID_D_Name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn subID_D;
         private System.Windows.Forms.DataGridViewTextBoxColumn billNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn purchar;
         private System.Windows.Forms.DataGridViewTextBoxColumn tax;
