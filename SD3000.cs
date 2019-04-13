@@ -189,7 +189,7 @@ namespace BaiwangExport
                 + ",rawcredit=0,debit={1},credit={2},moneyid={3}"
                 + ",subid={4},brief='{5}')";
 
-            DBHelper dbHelper = new DBHelper(connSString);
+            
             
             for (int i = 0; i < credence.Rows.Count; i++)
             {
@@ -225,6 +225,8 @@ namespace BaiwangExport
                 sb.AppendFormat(sqlcredItem, fenluno.ToString(), "0", credit.ToString(), moneyId.ToString(), subId_C.ToString()
                     , brief);
 
+                DBHelper dbHelper = new DBHelper(connSString);
+
                 try
                 {
                     dbHelper.ExecuteNonQuery(sb.ToString());
@@ -234,6 +236,12 @@ namespace BaiwangExport
                 catch (Exception ex)
                 {
                     credence.Rows[i]["msg"] = "失败：" + ex.Message;
+
+                }
+                finally
+                {
+                    if (dbHelper != null)
+                        dbHelper.Close();
                 }
             }
 
@@ -250,6 +258,21 @@ namespace BaiwangExport
             DBHelper dbHelper = new DBHelper(connectionString);
             string sql = " Select  subid,subcode,name,fullname,displayname=fullname  from Subject "
              + " where detailflag = 'T' and((specialcode <> '113' and specialcode <> '115' and specialcode <> '203' and specialcode <> '204') or specialcode is null) "  
+             + "order by subcode ";
+            return dbHelper.GetDataTable(sql);
+        }
+
+        /// <summary>
+        /// 获取科目
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        public static DataTable GetSubjectByName(string connectionString,string name)
+        {
+            DBHelper dbHelper = new DBHelper(connectionString);
+            string sql = " Select  subid,subcode,name,fullname,displayname=fullname  from Subject "
+             + " where detailflag = 'T' and((specialcode <> '113' and specialcode <> '115' and specialcode <> '203' and specialcode <> '204') or specialcode is null) "
+             + " and name='" + name + "'"
              + "order by subcode ";
             return dbHelper.GetDataTable(sql);
         }

@@ -31,8 +31,6 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.cboAccount = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnGetSub = new System.Windows.Forms.Button();
-            this.btnOK = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.cboIncomeSubject = new System.Windows.Forms.ComboBox();
             this.cboTaxSSubject = new System.Windows.Forms.ComboBox();
@@ -52,6 +50,8 @@
             this.purchar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tax = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.debit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cboGroupBy = new System.Windows.Forms.ComboBox();
+            this.lblGroupBy = new System.Windows.Forms.Label();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -74,10 +74,10 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.cboGroupBy);
+            this.splitContainer1.Panel1.Controls.Add(this.lblGroupBy);
             this.splitContainer1.Panel1.Controls.Add(this.cboAccount);
             this.splitContainer1.Panel1.Controls.Add(this.label5);
-            this.splitContainer1.Panel1.Controls.Add(this.btnGetSub);
-            this.splitContainer1.Panel1.Controls.Add(this.btnOK);
             this.splitContainer1.Panel1.Controls.Add(this.label6);
             this.splitContainer1.Panel1.Controls.Add(this.cboIncomeSubject);
             this.splitContainer1.Panel1.Controls.Add(this.cboTaxSSubject);
@@ -88,6 +88,7 @@
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.cboCredType);
             this.splitContainer1.Panel1.Controls.Add(this.lblCredType);
+            this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
             // 
             // splitContainer1.Panel2
             // 
@@ -112,25 +113,6 @@
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 28;
             this.label5.Text = "转入账套";
-            // 
-            // btnGetSub
-            // 
-            this.btnGetSub.Location = new System.Drawing.Point(597, 48);
-            this.btnGetSub.Name = "btnGetSub";
-            this.btnGetSub.Size = new System.Drawing.Size(75, 23);
-            this.btnGetSub.TabIndex = 27;
-            this.btnGetSub.Text = "获取应收账款科目";
-            this.btnGetSub.UseVisualStyleBackColor = true;
-            this.btnGetSub.Click += new System.EventHandler(this.btnGetSub_Click);
-            // 
-            // btnOK
-            // 
-            this.btnOK.Location = new System.Drawing.Point(597, 83);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 26;
-            this.btnOK.Text = "转凭证";
-            this.btnOK.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -169,7 +151,7 @@
             // cboBiller
             // 
             this.cboBiller.FormattingEnabled = true;
-            this.cboBiller.Location = new System.Drawing.Point(597, 12);
+            this.cboBiller.Location = new System.Drawing.Point(597, 9);
             this.cboBiller.Name = "cboBiller";
             this.cboBiller.Size = new System.Drawing.Size(150, 20);
             this.cboBiller.TabIndex = 21;
@@ -177,7 +159,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(550, 16);
+            this.label3.Location = new System.Drawing.Point(550, 13);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 12);
             this.label3.TabIndex = 20;
@@ -298,6 +280,26 @@
             this.debit.ReadOnly = true;
             this.debit.Width = 120;
             // 
+            // cboGroupBy
+            // 
+            this.cboGroupBy.FormattingEnabled = true;
+            this.cboGroupBy.Items.AddRange(new object[] {
+            "按购货单位合并",
+            "按购货单位和期别合并"});
+            this.cboGroupBy.Location = new System.Drawing.Point(597, 34);
+            this.cboGroupBy.Name = "cboGroupBy";
+            this.cboGroupBy.Size = new System.Drawing.Size(150, 20);
+            this.cboGroupBy.TabIndex = 31;
+            // 
+            // lblGroupBy
+            // 
+            this.lblGroupBy.AutoSize = true;
+            this.lblGroupBy.Location = new System.Drawing.Point(540, 38);
+            this.lblGroupBy.Name = "lblGroupBy";
+            this.lblGroupBy.Size = new System.Drawing.Size(53, 12);
+            this.lblGroupBy.TabIndex = 30;
+            this.lblGroupBy.Text = "合并方式";
+            // 
             // FormCredence
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -321,8 +323,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ComboBox cboAccount;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btnGetSub;
-        private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cboIncomeSubject;
         private System.Windows.Forms.ComboBox cboTaxSSubject;
@@ -342,5 +342,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn purchar;
         private System.Windows.Forms.DataGridViewTextBoxColumn tax;
         private System.Windows.Forms.DataGridViewTextBoxColumn debit;
+        private System.Windows.Forms.ComboBox cboGroupBy;
+        private System.Windows.Forms.Label lblGroupBy;
     }
 }

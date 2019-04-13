@@ -25,10 +25,29 @@ namespace BaiwangExport
         public FormCredence()
         {
             InitializeComponent();
+            InitialToolsTrip();
             cboAccount.SelectedIndexChanged += CboAccount_SelectedIndexChanged;
         }
+        void InitialToolsTrip()
+        {
+            ToolStripButton tbtnGetSub = new ToolStripButton();
+            tbtnGetSub.Text = "获取应收账款科目";
+            tbtnGetSub.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.ImageAndText;
+            //tbtnToSD3000Invoive.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            tbtnGetSub.ImageTransparentColor = System.Drawing.Color.Magenta;
+            tbtnGetSub.Click += btnGetSub_Click;
+            toolStrip1.Items.Add(tbtnGetSub);
 
-        public void InitialDataSource(string connString,DataTable credenceTable)
+            ToolStripButton tbtnGenVoucher = new ToolStripButton();
+            tbtnGenVoucher.Text = "生成凭证";
+            tbtnGenVoucher.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.ImageAndText;
+            //tbtnToSD3000Invoive.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            tbtnGenVoucher.ImageTransparentColor = System.Drawing.Color.Magenta;
+            tbtnGenVoucher.Click += btnOK_Click;
+            toolStrip1.Items.Add(tbtnGetSub);
+        }
+
+            public void InitialDataSource(string connString,DataTable credenceTable)
         {
             ConnString = connString;
             try
@@ -195,15 +214,27 @@ namespace BaiwangExport
             int moneyId = 0;
 
             DataTable table = dataGridView1.DataSource as DataTable;
-            if(table==null || table.Rows.Count == 0)
+            if (table == null || table.Rows.Count == 0)
             {
                 MessageBox.Show("细表为空，无凭证可生成！");
                 return;
             }
 
-            SD3000.CreateCredence(ConnString, table, credtype, CredDate, BillMaker, subId_Tax, subId_C, moneyId);
-    }
+            table.DefaultView.Sort = new string[] {  };
 
+            try
+            {
+                SD3000.CreateCredence(ConnString, table, credtype, CredDate, BillMaker, subId_Tax, subId_C, moneyId);
+                MessageBox.Show("凭证生成成功！");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        //获取应收账款科目
         private void btnGetSub_Click(object sender, EventArgs e)
         {
             if (cboAccount.SelectedIndex == -1)
@@ -225,7 +256,15 @@ namespace BaiwangExport
 
             foreach (DataRow row in table.Rows)
             {
-                
+                string name = row[""].ToString();
+                if (string.IsNullOrWhiteSpace(name))
+                    continue;
+                DataTable subTable = SD3000.GetSubjectByName(ConnString, name);
+                if(subTable != null && subTable.Rows.Count>0)
+                {
+                    row["subid_d"] = subTable.Rows[0]["subid"];
+                    row["subID_D_Name"] = subTable.Rows[0]["name"];
+                }
             }
         }
 
@@ -255,6 +294,11 @@ namespace BaiwangExport
             if (view == null) return;
 
             row.Cells[""].Value = view["subid"];
+        }
+
+        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 

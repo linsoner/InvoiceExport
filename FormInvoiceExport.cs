@@ -105,18 +105,18 @@ namespace BaiwangExport
                     return;
                 }
 
-                var query = from t in credenceTable.AsEnumerable()
-                            group t by new { t1 = t.Field<string>("areaid"), t2 = t.Field<string>("seq") } into m
-                            select new
-                            {
-                                areaid = m.Key.t1,
-                                seq = m.Key.t2,
-                                house = m.First().Field<string>("house"),
-                                rowcount = m.Count()
-                            };
+                //var query = from t in credenceTable.AsEnumerable()
+                //            group t by new { t1 = t.Field<string>("areaid"), t2 = t.Field<string>("seq") } into m
+                //            select new
+                //            {
+                //                areaid = m.Key.t1,
+                //                seq = m.Key.t2,
+                //                house = m.First().Field<string>("house"),
+                //                rowcount = m.Count()
+                //            };
 
-                foreach (var item in query.ToList())
-                { if (item.rowcount > 1) { MessageBox.Show(item.areaid + "---" + item.house); } Console.WriteLine(item.areaid + "---" + item.house + "---" + item.rowcount); Console.WriteLine("\r\n"); }
+                //foreach (var item in query.ToList())
+                //{ if (item.rowcount > 1) { MessageBox.Show(item.areaid + "---" + item.house); } Console.WriteLine(item.areaid + "---" + item.house + "---" + item.rowcount); Console.WriteLine("\r\n"); }
                 FormCredence cred = new FormCredence();
                 cred.InitialDataSource(connString, credenceTable);
                 cred.Show();
