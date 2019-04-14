@@ -301,5 +301,97 @@ namespace BaiwangExport
             return dbHelper.GetDataTable(sql);
         }
         
-       }
+        public static DataTable GetEmptyCredenceItem()
+        {
+            DataTable table = new DataTable("CredenceItem");
+            DataColumn column = new DataColumn("credid",typeof(string));
+            column.Caption = "凭证ID";
+            table.Columns.Add(column);
+            column = new DataColumn("fenluno", typeof(int));
+            column.Caption = "分录号";
+            table.Columns.Add(column);
+            column = new DataColumn("rate", typeof(decimal));
+            column.Caption = "汇率";
+            table.Columns.Add(column);
+            column = new DataColumn("rawdebit", typeof(decimal));
+            column.Caption = "借方汇率";
+            table.Columns.Add(column);
+            column = new DataColumn("rawcredit", typeof(decimal));
+            column.Caption = "贷方汇率";
+            table.Columns.Add(column);
+            column = new DataColumn("debit", typeof(int));
+            column.Caption = "借方金额";
+            table.Columns.Add(column);
+            column = new DataColumn("credit", typeof(int));
+            column.Caption = "贷方金额";
+            table.Columns.Add(column);
+            column = new DataColumn("moneyid", typeof(int));
+            column.Caption = "货币ID";
+            table.Columns.Add(column);
+            column = new DataColumn("subid", typeof(string));
+            column.Caption = "科目ID";
+            table.Columns.Add(column);
+            column = new DataColumn("brief", typeof(int));
+            column.Caption = "摘要";
+            table.Columns.Add(column);
+
+            return table;
+        }
+
+        public static DataTable GetEmptyCredence()
+        {
+            DataTable table = new DataTable("Credence");
+            DataColumn column = new DataColumn("credid", typeof(string));
+            column.Caption = "凭证ID";
+            table.Columns.Add(column);
+            column = new DataColumn("shopid", typeof(int));
+            column.Caption = "分支机构ID";
+            table.Columns.Add(column);
+            column = new DataColumn("credtype", typeof(int));
+            column.Caption = "凭证类型";
+            table.Columns.Add(column);
+            column = new DataColumn("rptid", typeof(int));
+            column.Caption = "打印样式ID";
+            table.Columns.Add(column);
+            column = new DataColumn("credcode", typeof(string));
+            column.Caption = "凭证号";
+            table.Columns.Add(column);
+            column = new DataColumn("credno", typeof(string));
+            column.Caption = "凭证序号";
+            table.Columns.Add(column);
+            column = new DataColumn("creddate", typeof(string));
+            column.Caption = "编制日期";
+            table.Columns.Add(column);
+            column = new DataColumn("billnumber", typeof(string));
+            column.Caption = "附件数";
+            table.Columns.Add(column);
+            column = new DataColumn("billmaker", typeof(string));
+            column.Caption = "制单人";
+            table.Columns.Add(column);
+            column = new DataColumn("billcheck", typeof(string));
+            column.Caption = "审核人";
+            table.Columns.Add(column);
+            column = new DataColumn("billpost", typeof(string));
+            column.Caption = "登帐人";
+            table.Columns.Add(column);
+            column = new DataColumn("checkflag", typeof(string));
+            column.Caption = "审核标志";
+            table.Columns.Add(column);
+            column = new DataColumn("postflag", typeof(string));
+            column.Caption = "登帐标志";
+            table.Columns.Add(column);
+            column = new DataColumn("relevantbillid", typeof(string));
+            column.Caption = "relevantbillid";
+            table.Columns.Add(column);
+            column = new DataColumn("credtypeid", typeof(string));
+            column.Caption = "credtypeid";
+            table.Columns.Add(column);
+            /*
+             * "credid","","","","","","","",""
+             * ,"","","","","",""
+             * */
+
+            return table;
+        }
+    }
 }
