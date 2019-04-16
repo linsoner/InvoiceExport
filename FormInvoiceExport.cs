@@ -98,25 +98,27 @@ namespace BaiwangExport
                 bool.TryParse(table.Rows[0]["integratedSecurity"].ToString(), out integratedSecurity);
                 string connString = DBHelper.GetConnectionString(server, dbName, dbUser, password, integratedSecurity);
 
-                DataTable credenceTable = dataGridView1.DataSource as DataTable;
-                if(credenceTable==null || credenceTable.Rows.Count ==0)
+                DataTable mst = dataGridView1.DataSource as DataTable;
+                if(mst == null || mst.Rows.Count ==0)
                 {
                     MessageBox.Show("没有可转凭证的记录！");
                     return;
                 }
 
-                //var query = from t in credenceTable.AsEnumerable()
-                //            group t by new { t1 = t.Field<string>("areaid"), t2 = t.Field<string>("seq") } into m
-                //            select new
-                //            {
-                //                areaid = m.Key.t1,
-                //                seq = m.Key.t2,
-                //                house = m.First().Field<string>("house"),
-                //                rowcount = m.Count()
-                //            };
+                DataTable credenceTable = SD3000.GetEmptyCredenceItem();
+                foreach(DataRow row in mst.Rows)
+                {
+                    if (row.RowState == DataRowState.Deleted)
+                        continue;
 
-                //foreach (var item in query.ToList())
-                //{ if (item.rowcount > 1) { MessageBox.Show(item.areaid + "---" + item.house); } Console.WriteLine(item.areaid + "---" + item.house + "---" + item.rowcount); Console.WriteLine("\r\n"); }
+                    DataRow r = credenceTable.NewRow();
+                    r["rate"] = 1;
+                    r["debit"] = row["jshj"];
+                    r["credit"] = row["hjse"];
+                    r["vendor"] = row["ghdwmc"];
+                    credenceTable.Rows.Add(r);
+                }
+                
                 FormCredence cred = new FormCredence();
                 cred.InitialDataSource(connString, credenceTable);
                 cred.Show();
@@ -194,8 +196,8 @@ namespace BaiwangExport
             }
 
 
-            _DataSet = XmlConvertor.XmlToDataSet(invoiceXml);
-            //_DataSet = XmlConvertor.XmlToDataSet(textBox1.Text);
+            //_DataSet = XmlConvertor.XmlToDataSet(invoiceXml);
+            _DataSet = XmlConvertor.XmlToDataSet(textBox1.Text);
             dataGridView1.DataSource = _DataSet.Tables["Mst"];
             dataGridView2.DataSource = _DataSet.Tables["Item"];
         }

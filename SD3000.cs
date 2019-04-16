@@ -312,27 +312,41 @@ namespace BaiwangExport
             table.Columns.Add(column);
             column = new DataColumn("rate", typeof(decimal));
             column.Caption = "汇率";
+            column.DefaultValue = 1m;
             table.Columns.Add(column);
             column = new DataColumn("rawdebit", typeof(decimal));
+            column.DefaultValue = 0m;
             column.Caption = "借方汇率";
             table.Columns.Add(column);
             column = new DataColumn("rawcredit", typeof(decimal));
             column.Caption = "贷方汇率";
             table.Columns.Add(column);
             column = new DataColumn("debit", typeof(int));
+            column.DefaultValue = 0m;
             column.Caption = "借方金额";
             table.Columns.Add(column);
             column = new DataColumn("credit", typeof(int));
+            column.DefaultValue = 0m;
             column.Caption = "贷方金额";
             table.Columns.Add(column);
             column = new DataColumn("moneyid", typeof(int));
+            column.DefaultValue = 0;
             column.Caption = "货币ID";
             table.Columns.Add(column);
             column = new DataColumn("subid", typeof(string));
             column.Caption = "科目ID";
             table.Columns.Add(column);
-            column = new DataColumn("brief", typeof(int));
+            column = new DataColumn("brief", typeof(string));
+            column.DefaultValue = "应收账款";
             column.Caption = "摘要";
+            table.Columns.Add(column);
+            column = new DataColumn("vendor", typeof(string));
+            column.DefaultValue = "";
+            column.Caption = "购货单位";
+            table.Columns.Add(column);
+            column = new DataColumn("billNumber", typeof(int));
+            column.DefaultValue = 0;
+            column.Caption = "附件数";
             table.Columns.Add(column);
 
             return table;
@@ -386,10 +400,6 @@ namespace BaiwangExport
             column = new DataColumn("credtypeid", typeof(string));
             column.Caption = "credtypeid";
             table.Columns.Add(column);
-            /*
-             * "credid","","","","","","","",""
-             * ,"","","","","",""
-             * */
 
             return table;
         }

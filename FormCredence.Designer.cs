@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lblTaxNumber = new System.Windows.Forms.Label();
+            this.cboGroupBy = new System.Windows.Forms.ComboBox();
+            this.lblGroupBy = new System.Windows.Forms.Label();
             this.cboAccount = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -42,16 +45,18 @@
             this.cboCredType = new System.Windows.Forms.ComboBox();
             this.lblCredType = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.fSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.fenluno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rawdebit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rawcredit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.brief = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.moneyid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.subID_D_Name = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.subID_D = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.billNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.purchar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tax = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.debit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cboGroupBy = new System.Windows.Forms.ComboBox();
-            this.lblGroupBy = new System.Windows.Forms.Label();
+            this.vendor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -74,6 +79,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.lblTaxNumber);
             this.splitContainer1.Panel1.Controls.Add(this.cboGroupBy);
             this.splitContainer1.Panel1.Controls.Add(this.lblGroupBy);
             this.splitContainer1.Panel1.Controls.Add(this.cboAccount);
@@ -96,6 +102,36 @@
             this.splitContainer1.Size = new System.Drawing.Size(1264, 610);
             this.splitContainer1.SplitterDistance = 120;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // lblTaxNumber
+            // 
+            this.lblTaxNumber.AutoSize = true;
+            this.lblTaxNumber.Location = new System.Drawing.Point(480, 13);
+            this.lblTaxNumber.Name = "lblTaxNumber";
+            this.lblTaxNumber.Size = new System.Drawing.Size(29, 12);
+            this.lblTaxNumber.TabIndex = 32;
+            this.lblTaxNumber.Text = "税号";
+            this.lblTaxNumber.Visible = false;
+            // 
+            // cboGroupBy
+            // 
+            this.cboGroupBy.FormattingEnabled = true;
+            this.cboGroupBy.Items.AddRange(new object[] {
+            "按购货单位合并",
+            "按购货单位和期别合并"});
+            this.cboGroupBy.Location = new System.Drawing.Point(597, 34);
+            this.cboGroupBy.Name = "cboGroupBy";
+            this.cboGroupBy.Size = new System.Drawing.Size(150, 20);
+            this.cboGroupBy.TabIndex = 31;
+            // 
+            // lblGroupBy
+            // 
+            this.lblGroupBy.AutoSize = true;
+            this.lblGroupBy.Location = new System.Drawing.Point(540, 38);
+            this.lblGroupBy.Name = "lblGroupBy";
+            this.lblGroupBy.Size = new System.Drawing.Size(53, 12);
+            this.lblGroupBy.TabIndex = 30;
+            this.lblGroupBy.Text = "合并方式";
             // 
             // cboAccount
             // 
@@ -202,14 +238,18 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.fSelected,
+            this.fenluno,
+            this.rawdebit,
+            this.rawcredit,
             this.brief,
+            this.moneyid,
+            this.rate,
             this.subID_D_Name,
             this.subID_D,
             this.billNumber,
-            this.purchar,
-            this.tax,
-            this.debit});
+            this.credit,
+            this.debit,
+            this.vendor});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
@@ -217,17 +257,26 @@
             this.dataGridView1.Size = new System.Drawing.Size(1264, 486);
             this.dataGridView1.TabIndex = 0;
             // 
-            // fSelected
+            // fenluno
             // 
-            this.fSelected.DataPropertyName = "fSelected";
-            this.fSelected.FalseValue = "0";
-            this.fSelected.HeaderText = "选择";
-            this.fSelected.IndeterminateValue = "1";
-            this.fSelected.Name = "fSelected";
-            this.fSelected.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.fSelected.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.fSelected.TrueValue = "1";
-            this.fSelected.Width = 60;
+            this.fenluno.DataPropertyName = "fenluno";
+            this.fenluno.HeaderText = "分录号";
+            this.fenluno.Name = "fenluno";
+            this.fenluno.Visible = false;
+            // 
+            // rawdebit
+            // 
+            this.rawdebit.DataPropertyName = "rawdebit";
+            this.rawdebit.HeaderText = "借方汇率";
+            this.rawdebit.Name = "rawdebit";
+            this.rawdebit.Visible = false;
+            // 
+            // rawcredit
+            // 
+            this.rawcredit.DataPropertyName = "rawcredit";
+            this.rawcredit.HeaderText = "贷方汇率";
+            this.rawcredit.Name = "rawcredit";
+            this.rawcredit.Visible = false;
             // 
             // brief
             // 
@@ -235,6 +284,21 @@
             this.brief.HeaderText = "摘要";
             this.brief.Name = "brief";
             this.brief.Width = 330;
+            // 
+            // moneyid
+            // 
+            this.moneyid.DataPropertyName = "moneyid";
+            this.moneyid.HeaderText = "币种ID";
+            this.moneyid.Name = "moneyid";
+            this.moneyid.Visible = false;
+            // 
+            // rate
+            // 
+            this.rate.DataPropertyName = "rate";
+            this.rate.HeaderText = "汇率";
+            this.rate.Name = "rate";
+            this.rate.ReadOnly = true;
+            this.rate.Visible = false;
             // 
             // subID_D_Name
             // 
@@ -245,7 +309,7 @@
             // 
             // subID_D
             // 
-            this.subID_D.DataPropertyName = "subID_D";
+            this.subID_D.DataPropertyName = "subid";
             this.subID_D.HeaderText = "科目ID";
             this.subID_D.Name = "subID_D";
             this.subID_D.Visible = false;
@@ -257,20 +321,12 @@
             this.billNumber.Name = "billNumber";
             this.billNumber.Width = 80;
             // 
-            // purchar
+            // credit
             // 
-            this.purchar.HeaderText = "购货单位";
-            this.purchar.Name = "purchar";
-            this.purchar.ReadOnly = true;
-            this.purchar.Width = 200;
-            // 
-            // tax
-            // 
-            this.tax.DataPropertyName = "tax";
-            this.tax.HeaderText = "税额";
-            this.tax.Name = "tax";
-            this.tax.ReadOnly = true;
-            this.tax.Width = 120;
+            this.credit.DataPropertyName = "credit";
+            this.credit.HeaderText = "税额";
+            this.credit.Name = "credit";
+            this.credit.ReadOnly = true;
             // 
             // debit
             // 
@@ -280,25 +336,13 @@
             this.debit.ReadOnly = true;
             this.debit.Width = 120;
             // 
-            // cboGroupBy
+            // vendor
             // 
-            this.cboGroupBy.FormattingEnabled = true;
-            this.cboGroupBy.Items.AddRange(new object[] {
-            "按购货单位合并",
-            "按购货单位和期别合并"});
-            this.cboGroupBy.Location = new System.Drawing.Point(597, 34);
-            this.cboGroupBy.Name = "cboGroupBy";
-            this.cboGroupBy.Size = new System.Drawing.Size(150, 20);
-            this.cboGroupBy.TabIndex = 31;
-            // 
-            // lblGroupBy
-            // 
-            this.lblGroupBy.AutoSize = true;
-            this.lblGroupBy.Location = new System.Drawing.Point(540, 38);
-            this.lblGroupBy.Name = "lblGroupBy";
-            this.lblGroupBy.Size = new System.Drawing.Size(53, 12);
-            this.lblGroupBy.TabIndex = 30;
-            this.lblGroupBy.Text = "合并方式";
+            this.vendor.DataPropertyName = "vendor";
+            this.vendor.HeaderText = "购货单位";
+            this.vendor.Name = "vendor";
+            this.vendor.ReadOnly = true;
+            this.vendor.Width = 200;
             // 
             // FormCredence
             // 
@@ -334,15 +378,20 @@
         private System.Windows.Forms.ComboBox cboCredType;
         private System.Windows.Forms.Label lblCredType;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn fSelected;
+        private System.Windows.Forms.ComboBox cboGroupBy;
+        private System.Windows.Forms.Label lblGroupBy;
+        private System.Windows.Forms.Label lblTaxNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fenluno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rawdebit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rawcredit;
         private System.Windows.Forms.DataGridViewTextBoxColumn brief;
+        private System.Windows.Forms.DataGridViewTextBoxColumn moneyid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rate;
         private System.Windows.Forms.DataGridViewComboBoxColumn subID_D_Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn subID_D;
         private System.Windows.Forms.DataGridViewTextBoxColumn billNumber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn purchar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tax;
+        private System.Windows.Forms.DataGridViewTextBoxColumn credit;
         private System.Windows.Forms.DataGridViewTextBoxColumn debit;
-        private System.Windows.Forms.ComboBox cboGroupBy;
-        private System.Windows.Forms.Label lblGroupBy;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vendor;
     }
 }

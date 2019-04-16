@@ -220,7 +220,7 @@ namespace BaiwangExport
                 return;
             }
 
-            table.DefaultView.Sort = new string[] {  };
+            //table.DefaultView.Sort = new string[] {  };
 
             try
             {
