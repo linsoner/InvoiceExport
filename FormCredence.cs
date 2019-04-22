@@ -15,6 +15,7 @@ namespace BaiwangExport
     {
         DataTable _SubjectTable = null;
         string ConnString { get; set; }
+        string MergeType { get; set; } //合并方式
 
         public int Credtype { get; set; }
         public int Sub_C { get; set; }
@@ -27,6 +28,7 @@ namespace BaiwangExport
             InitializeComponent();
             InitialToolsTrip();
             cboAccount.SelectedIndexChanged += CboAccount_SelectedIndexChanged;
+            dataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
         }
         void InitialToolsTrip()
         {
@@ -44,17 +46,23 @@ namespace BaiwangExport
             //tbtnToSD3000Invoive.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             tbtnGenVoucher.ImageTransparentColor = System.Drawing.Color.Magenta;
             tbtnGenVoucher.Click += btnOK_Click;
-            toolStrip1.Items.Add(tbtnGetSub);
+            toolStrip1.Items.Add(tbtnGenVoucher);
         }
 
-            public void InitialDataSource(string connString,DataTable credenceTable)
+        public void InitialDataSource(string connString, string mergeType, DataTable credenceTable)
         {
             ConnString = connString;
+            MergeType = mergeType;
             try
             {
                 GetAccounts();
-                if(credenceTable != null)
+                if (credenceTable != null)
+                {
                     dataGridView1.DataSource = credenceTable;
+                    toolStripStatusLabel1.Text = string.Format("记录数：{0}   总金额：{1}"
+                        , credenceTable.Rows.Count
+                        , credenceTable.Compute("sum(debit)", ""));
+                }
             }
             catch (Exception ex)
             {
@@ -80,12 +88,8 @@ namespace BaiwangExport
         private void CboAccount_SelectedIndexChanged(object sender, EventArgs e)
         {
             #region 根据选择的账套修改数据库连接字符串
-            string dbSuffix = string.Empty;
-            DataRowView view = cboAccount.SelectedValue as DataRowView;
-            if (view != null)
-            {
-                dbSuffix = view["accsetname"].ToString();
-            }
+            string dbSuffix = cboAccount.SelectedValue.ToString();
+
             if (string.IsNullOrWhiteSpace(dbSuffix)) return;
 
             string[] s = ConnString.Split(';');
@@ -120,6 +124,7 @@ namespace BaiwangExport
             {
                 DataTable table = subjects.Copy();
 
+                //税金科目
                 cboTaxSSubject.DataSource = table;
                 cboTaxSSubject.DisplayMember = "displayname";
                 cboTaxSSubject.ValueMember = "subid";
@@ -127,6 +132,7 @@ namespace BaiwangExport
                 if (rows.Length > 0)
                     cboTaxSSubject.SelectedIndex = table.Rows.IndexOf(rows[0]);
 
+                //主营业务科目
                 cboIncomeSubject.DataSource = subjects;
                 cboIncomeSubject.DisplayMember = "displayname";
                 cboIncomeSubject.ValueMember = "subid";
@@ -134,10 +140,16 @@ namespace BaiwangExport
                 if (rows2.Length > 0)
                     cboIncomeSubject.SelectedIndex = subjects.Rows.IndexOf(rows2[0]);
 
+                //收入科目
+                DataTable cashTable = subjects.Copy();
+                cboCashSubject.DataSource = cashTable;
+                cboCashSubject.DisplayMember = "displayname";
+                cboCashSubject.ValueMember = "subid";
+                DataRow[] rows3 = cashTable.Select("subcode='1001'");
+                if (rows2.Length > 0)
+                    cboCashSubject.SelectedIndex = cashTable.Rows.IndexOf(rows2[0]);
+
                 _SubjectTable = table.Copy();
-                //subID_D_Name.DataSource = table.Copy();
-                //subID_D_Name.DisplayMember = "displayname";
-                //subID_D_Name.ValueMember = "subid";
             }
         }
         public void GetCredTypes()
@@ -203,6 +215,9 @@ namespace BaiwangExport
             if (int.TryParse(cboIncomeSubject.SelectedValue.ToString(), out subId_C))
                 Sub_C = subId_C;
 
+            int subId_D = -1;
+            int.TryParse(cboCashSubject.SelectedValue.ToString(), out subId_D) ;
+
             int subId_Tax = -1;
             if (int.TryParse(cboTaxSSubject.SelectedValue.ToString(), out subId_Tax))
                 Sub_Tax = subId_Tax;
@@ -220,11 +235,9 @@ namespace BaiwangExport
                 return;
             }
 
-            //table.DefaultView.Sort = new string[] {  };
-
             try
             {
-                SD3000.CreateCredence(ConnString, table, credtype, CredDate, BillMaker, subId_Tax, subId_C, moneyId);
+                SD3000.CreateCredence(ConnString, table, credtype, CredDate, BillMaker, subId_Tax, subId_C, subId_D, moneyId);
                 MessageBox.Show("凭证生成成功！");
             }
             catch (Exception ex)
@@ -256,7 +269,7 @@ namespace BaiwangExport
 
             foreach (DataRow row in table.Rows)
             {
-                string name = row[""].ToString();
+                string name = row["vendor"].ToString();
                 if (string.IsNullOrWhiteSpace(name))
                     continue;
                 DataTable subTable = SD3000.GetSubjectByName(ConnString, name);
@@ -271,16 +284,16 @@ namespace BaiwangExport
         private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             ComboBox cbo = e.Control as ComboBox;
-            cbo.SelectedIndexChanged += Cbo_SelectedIndexChanged;
             if (cbo != null && _SubjectTable != null)
             {
                 cbo.DataSource = _SubjectTable;
                 cbo.DisplayMember = "displayname";
                 cbo.ValueMember = "subid";
             }
+            cbo.SelectedIndexChanged += CboSubject_SelectedIndexChanged;
         }
 
-        private void Cbo_SelectedIndexChanged(object sender, EventArgs e)
+        private void CboSubject_SelectedIndexChanged(object sender, EventArgs e)
         {
             DataGridViewRow row = dataGridView1.CurrentRow;
             if (row == null)
@@ -291,14 +304,9 @@ namespace BaiwangExport
                 return;
 
             DataRowView view = cbo.SelectedValue as DataRowView;
-            if (view == null) return;
+            if (view == null) return; 
 
-            row.Cells[""].Value = view["subid"];
-        }
-
-        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
+            row.Cells["subID_D"].Value = view["subid"];
         }
     }
 

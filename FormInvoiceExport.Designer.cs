@@ -43,7 +43,7 @@
             this.btnQuery = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView_Mst = new System.Windows.Forms.DataGridView();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.fphxz = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.spmc = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,7 +55,7 @@
             this.je = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sl = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.se = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.item_fpdm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.item_fphm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.item_xh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hsbz = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fpdm = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -63,6 +63,7 @@
             this.xh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.scbz = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fpzt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.qb = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kprq = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.zhsl = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hjje = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -84,7 +85,7 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Mst)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -207,7 +208,7 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.dataGridView1);
+            this.splitContainer2.Panel1.Controls.Add(this.dataGridView_Mst);
             // 
             // splitContainer2.Panel2
             // 
@@ -216,17 +217,18 @@
             this.splitContainer2.SplitterDistance = 220;
             this.splitContainer2.TabIndex = 1;
             // 
-            // dataGridView1
+            // dataGridView_Mst
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridView_Mst.AllowUserToAddRows = false;
+            this.dataGridView_Mst.AllowUserToDeleteRows = false;
+            this.dataGridView_Mst.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_Mst.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.fpdm,
             this.fphm,
             this.xh,
             this.scbz,
             this.fpzt,
+            this.qb,
             this.kprq,
             this.zhsl,
             this.hjje,
@@ -239,12 +241,12 @@
             this.ghdwsbh,
             this.ghdwmc,
             this.ykfsje});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1008, 220);
-            this.dataGridView1.TabIndex = 1;
+            this.dataGridView_Mst.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_Mst.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView_Mst.Name = "dataGridView_Mst";
+            this.dataGridView_Mst.RowTemplate.Height = 23;
+            this.dataGridView_Mst.Size = new System.Drawing.Size(1008, 220);
+            this.dataGridView_Mst.TabIndex = 1;
             // 
             // dataGridView2
             // 
@@ -262,7 +264,7 @@
             this.je,
             this.sl,
             this.se,
-            this.item_fpdm,
+            this.item_fphm,
             this.item_xh,
             this.hsbz});
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -346,12 +348,12 @@
             this.se.Name = "se";
             this.se.ReadOnly = true;
             // 
-            // item_fpdm
+            // item_fphm
             // 
-            this.item_fpdm.DataPropertyName = "fpdm";
-            this.item_fpdm.HeaderText = "发票代码";
-            this.item_fpdm.Name = "item_fpdm";
-            this.item_fpdm.ReadOnly = true;
+            this.item_fphm.DataPropertyName = "fphm";
+            this.item_fphm.HeaderText = "发票号码";
+            this.item_fphm.Name = "item_fphm";
+            this.item_fphm.ReadOnly = true;
             // 
             // item_xh
             // 
@@ -397,13 +399,22 @@
             this.scbz.HeaderText = "上传标志";
             this.scbz.Name = "scbz";
             this.scbz.ReadOnly = true;
+            this.scbz.Visible = false;
             this.scbz.Width = 60;
             // 
             // fpzt
             // 
+            this.fpzt.DataPropertyName = "fpzt";
             this.fpzt.HeaderText = "发票状态";
             this.fpzt.Name = "fpzt";
             this.fpzt.ReadOnly = true;
+            // 
+            // qb
+            // 
+            this.qb.HeaderText = "期别";
+            this.qb.Name = "qb";
+            this.qb.ReadOnly = true;
+            this.qb.Visible = false;
             // 
             // kprq
             // 
@@ -459,6 +470,7 @@
             this.xhdwsbh.HeaderText = "销货单位识别号";
             this.xhdwsbh.Name = "xhdwsbh";
             this.xhdwsbh.ReadOnly = true;
+            this.xhdwsbh.Visible = false;
             // 
             // xhdwmc
             // 
@@ -466,6 +478,7 @@
             this.xhdwmc.HeaderText = "销货单位名称";
             this.xhdwmc.Name = "xhdwmc";
             this.xhdwmc.ReadOnly = true;
+            this.xhdwmc.Visible = false;
             // 
             // ghdwsbh
             // 
@@ -504,7 +517,7 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Mst)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -524,7 +537,7 @@
         private System.Windows.Forms.Button btnQuery;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridView_Mst;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.DataGridViewTextBoxColumn fphxz;
@@ -537,7 +550,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn je;
         private System.Windows.Forms.DataGridViewTextBoxColumn sl;
         private System.Windows.Forms.DataGridViewTextBoxColumn se;
-        private System.Windows.Forms.DataGridViewTextBoxColumn item_fpdm;
+        private System.Windows.Forms.DataGridViewTextBoxColumn item_fphm;
         private System.Windows.Forms.DataGridViewTextBoxColumn item_xh;
         private System.Windows.Forms.DataGridViewTextBoxColumn hsbz;
         private System.Windows.Forms.DataGridViewTextBoxColumn fpdm;
@@ -545,6 +558,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn xh;
         private System.Windows.Forms.DataGridViewTextBoxColumn scbz;
         private System.Windows.Forms.DataGridViewTextBoxColumn fpzt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn qb;
         private System.Windows.Forms.DataGridViewTextBoxColumn kprq;
         private System.Windows.Forms.DataGridViewTextBoxColumn zhsl;
         private System.Windows.Forms.DataGridViewTextBoxColumn hjje;

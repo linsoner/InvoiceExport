@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.IO;
-using System.Data.SqlClient;
+using System.Text;
 
 namespace BaiwangExport
 {
@@ -148,7 +144,7 @@ namespace BaiwangExport
         /// <returns></returns>
         public static int CreateCredence(string connSString,DataTable credence 
             ,int credType, DateTime credDate,string billMaker
-            ,int subId_Tax, int subId_C,int moneyId)
+            ,int subId_Tax, int subId_C, int subId_D, int moneyId)
         {
             int successCount = 0;
 
@@ -162,14 +158,14 @@ namespace BaiwangExport
 
             StringBuilder sb = new StringBuilder();
             string sqlDeclare = "declare @CredID varchar(30),@CredNo int,@CredCode int,@subID_D int";
-            string sqlCredID = "select @CredID=isnull(max(CredID), 100000000000)+1 from Credence where credid like '____________'"
-                              + " set @CredID=isnull(@CredID,100000000000) ";
+            string sqlCredID = "select @CredID=convert(bigint,isnull(max(CredID), 100000000000))+1 from Credence where credid like '____________'"
+                              + " if @CredID is null set @CredID=100000000000 ";
             string sqlCredNo = string.Format("SELECT  @CredNo=Max(CredNo)+1 from Credence "
-                          + " WHERE creddate >= '{0}' and creddate <= '{1}'"
+                          + " WHERE creddate >= '{0}' and creddate <= '{1}' and credtypeid=1"
                          , fStartDate, fEndDate);
             sqlCredNo = sqlCredNo + " set @CredNo=isnull(@CredNo,1) ";
             string sqlCredCode = string.Format("SELECT  @CredCode=Max(CredCode)+1 from Credence "
-              + " WHERE credtypeid={0} creddate >= '{1}' and creddate <= '{2}'"
+              + " WHERE credtypeid={0} and creddate >= '{1}' and creddate <= '{2}'"
               , credType.ToString(), fStartDate, fEndDate);
             sqlCredCode = sqlCredCode + " set @CredCode=isnull(@CredCode,1) ";
 
@@ -177,36 +173,41 @@ namespace BaiwangExport
                     + ",credno,creddate,billnumber,billmaker"
                     + ",billcheck,billpost,checkflag,postflag"
                     +",relevantbillid,credtypeid,updatetime)"
-                    + "select credid=@CredID,shopid=0,credtype="+ credType.ToString().ToString() + ", rptid=20"
+                    + "select credid=@CredID,shopid=0,credtype=0, rptid=20"
                     + ",credcode=@CredCode,credno=@CredNo,creddate='"+ credDate.ToString("yyyy-MM-dd") + "', billnumber={0}"
                     + ",billmaker='"+billMaker+"', billcheck='',billpost='',checkflag='F'"
-                    + ",postflag='F',relevantbillid=1,credtypeid=0,updatetime=getdate()";
+                    + ",postflag='F',relevantbillid=0,credtypeid=" + credType.ToString() + ",updatetime=getdate()";
 
             string sqlcredItem = "insert into dbo.CredItem (credid,fenluno,rate,rawdebit"
-                + ",rawcredit,debit,credit,moneyid"
-                +",subid,brief)"
+                + ",rawcredit,debit,credit,moneyid "
+                +",subid,brief) "
                 + " select credid=@CredID,fenluno={0},rate=1,rawdebit=0"
                 + ",rawcredit=0,debit={1},credit={2},moneyid={3}"
-                + ",subid={4},brief='{5}')";
+                + ",subid={4},brief='{5}'";
 
-            
-            
+
+            DBHelper dbHelper = new DBHelper(connSString);
             for (int i = 0; i < credence.Rows.Count; i++)
             {
                 sb.Length = 0;
+                decimal debit = 0; //含税金额
+                decimal.TryParse(credence.Rows[i]["debit"].ToString(), out debit);
+                if (debit == 0)
+                    continue;
 
                 sb.AppendLine(sqlDeclare);
                 sb.AppendLine(sqlCredID);
                 sb.AppendLine(sqlCredNo);
+                sb.AppendLine(sqlCredCode);
                 int fbillNumber = 0; //附件数
                 int.TryParse(credence.Rows[i]["billnumber"].ToString(), out fbillNumber);
                 sb.AppendFormat(sqlCredence, fbillNumber);
-                int subId_D = 0; //应收账款科目
-                    int.TryParse(credence.Rows[i]["subID_D"].ToString(), out fbillNumber);
-                decimal debit = 0; //含税金额
-                decimal.TryParse(credence.Rows[i]["debit"].ToString(), out debit);
+                //应收账款科目
+                if(subId_D ==0)
+                    int.TryParse(credence.Rows[i]["subid"].ToString(), out subId_D);
+
                 decimal tax = 0; //税额
-                decimal.TryParse(credence.Rows[i]["tax"].ToString(), out tax);
+                decimal.TryParse(credence.Rows[i]["credit"].ToString(), out tax);
                 decimal credit = debit- tax;
                 //decimal.TryParse(credence.Rows[i]["credit"].ToString(), out credit);
                 string brief = credence.Rows[i]["brief"].ToString();
@@ -225,25 +226,20 @@ namespace BaiwangExport
                 sb.AppendFormat(sqlcredItem, fenluno.ToString(), "0", credit.ToString(), moneyId.ToString(), subId_C.ToString()
                     , brief);
 
-                DBHelper dbHelper = new DBHelper(connSString);
-
                 try
                 {
                     dbHelper.ExecuteNonQuery(sb.ToString());
                     successCount++;
-                    credence.Rows[i]["msg"] = "成功";
+                    //credence.Rows[i]["msg"] = "成功";
                 }
                 catch (Exception ex)
                 {
-                    credence.Rows[i]["msg"] = "失败：" + ex.Message;
-
-                }
-                finally
-                {
-                    if (dbHelper != null)
-                        dbHelper.Close();
+                    //credence.Rows[i]["msg"] = "失败：" + ex.Message;
                 }
             }
+
+            if (dbHelper != null)
+                dbHelper.Close();
 
             return successCount;
         }

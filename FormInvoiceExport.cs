@@ -36,18 +36,18 @@ namespace BaiwangExport
             comboBox1.DisplayMember = "company";
             comboBox1.ValueMember = "NSRSBH";
 
-            dataGridView1.SelectionChanged += DataGridView1_SelectionChanged;
+            dataGridView_Mst.SelectionChanged += DataGridView1_SelectionChanged;
 
             _DataSet = XmlConvertor.InitInvoiceDataTable();
         }
 
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            string fpdm = dataGridView1.CurrentRow.Cells["fpdm"].Value.ToString();
+            string fphm = dataGridView_Mst.CurrentRow.Cells["fphm"].Value.ToString();
             DataTable itemTable = dataGridView2.DataSource as DataTable;
             if (itemTable != null)
             {
-                itemTable.DefaultView.RowFilter = "fpdm='" + fpdm + "'";
+                itemTable.DefaultView.RowFilter = "fphm='" + fphm + "'";
             }
         }
         private void btnImport_Click(object sender, EventArgs e)
@@ -75,7 +75,7 @@ namespace BaiwangExport
                         itemTable.ImportRow(r);
                     }
 
-                    dataGridView1.DataSource = mstTable;
+                    dataGridView_Mst.DataSource = mstTable;
                     dataGridView2.DataSource = itemTable;
                 }
             }
@@ -87,6 +87,13 @@ namespace BaiwangExport
         }
         private void btnToSDInvoice_Click(object sender, EventArgs e)
         {
+            FormMergeType formMergeType = new FormMergeType();
+            if (formMergeType.ShowDialog() != DialogResult.OK)
+                return;
+
+            string mergeType = formMergeType.MergeType;
+            formMergeType.Close();
+
             try
             {
                 DataTable table = SD3000.GetConnectionTable();
@@ -98,30 +105,18 @@ namespace BaiwangExport
                 bool.TryParse(table.Rows[0]["integratedSecurity"].ToString(), out integratedSecurity);
                 string connString = DBHelper.GetConnectionString(server, dbName, dbUser, password, integratedSecurity);
 
-                DataTable mst = dataGridView1.DataSource as DataTable;
+                DataTable mst = dataGridView_Mst.DataSource as DataTable;
                 if(mst == null || mst.Rows.Count ==0)
                 {
                     MessageBox.Show("没有可转凭证的记录！");
                     return;
                 }
 
-                DataTable credenceTable = SD3000.GetEmptyCredenceItem();
-                foreach(DataRow row in mst.Rows)
-                {
-                    if (row.RowState == DataRowState.Deleted)
-                        continue;
-
-                    DataRow r = credenceTable.NewRow();
-                    r["rate"] = 1;
-                    r["debit"] = row["jshj"];
-                    r["credit"] = row["hjse"];
-                    r["vendor"] = row["ghdwmc"];
-                    credenceTable.Rows.Add(r);
-                }
+                DataTable credenceTable = GroupByMst(mergeType);
                 
                 FormCredence cred = new FormCredence();
-                cred.InitialDataSource(connString, credenceTable);
-                cred.Show();
+                cred.InitialDataSource(connString,mergeType, credenceTable);
+                cred.ShowDialog();
             }
             catch(Exception ex)
             {
@@ -197,8 +192,8 @@ namespace BaiwangExport
 
 
             //_DataSet = XmlConvertor.XmlToDataSet(invoiceXml);
-            _DataSet = XmlConvertor.XmlToDataSet(textBox1.Text);
-            dataGridView1.DataSource = _DataSet.Tables["Mst"];
+            _DataSet = XmlConvertor.XmlToDataSet_Hei(textBox1.Text);
+            dataGridView_Mst.DataSource = _DataSet.Tables["Mst"];
             dataGridView2.DataSource = _DataSet.Tables["Item"];
         }
 
@@ -211,6 +206,7 @@ namespace BaiwangExport
             tbtnToQuery.ImageTransparentColor = System.Drawing.Color.Magenta;
             tbtnToQuery.Click += btnQuery_Click;
             toolStrip1.Items.Add(tbtnToQuery);
+            tbtnToQuery.Visible = false;
 
             ToolStripButton tbtnImport = new ToolStripButton();
             tbtnImport.Text = "导入Excel";
@@ -219,6 +215,15 @@ namespace BaiwangExport
             tbtnImport.ImageTransparentColor = System.Drawing.Color.Magenta;
             tbtnImport.Click += btnImport_Click;
             toolStrip1.Items.Add(tbtnImport);
+            tbtnImport.Visible = false;
+
+            ToolStripButton tbtnImport_HeiXml = new ToolStripButton();
+            tbtnImport_HeiXml.Text = "导入黑盘XML";
+            tbtnImport_HeiXml.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.ImageAndText;
+            //tbtnImport_HeiXml.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            tbtnImport_HeiXml.ImageTransparentColor = System.Drawing.Color.Magenta;
+            tbtnImport_HeiXml.Click += TbtnImport_HeiXml_Click;
+            toolStrip1.Items.Add(tbtnImport_HeiXml);
 
             ToolStripButton tbtnExport = new ToolStripButton();
             tbtnExport.Text = "导出Excel";
@@ -227,6 +232,7 @@ namespace BaiwangExport
             tbtnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             tbtnExport.Click += btnExport_Click;
             toolStrip1.Items.Add(tbtnExport);
+            tbtnExport.Visible = false;
 
             ToolStripButton tbtnToSD3000Sale = new ToolStripButton();
             tbtnToSD3000Sale.Text = "转速达3000销售单";
@@ -236,6 +242,7 @@ namespace BaiwangExport
             //tbtnToSD3000Sale.Size = new System.Drawing.Size(23, 22);
             tbtnToSD3000Sale.Click += btnToSDSale_Click;
             toolStrip1.Items.Add(tbtnToSD3000Sale);
+            tbtnToSD3000Sale.Visible = false;
 
             ToolStripButton tbtnToSD3000Invoive = new ToolStripButton();
             tbtnToSD3000Invoive.Text = "转速达3000凭证";
@@ -244,6 +251,117 @@ namespace BaiwangExport
             tbtnToSD3000Invoive.ImageTransparentColor = System.Drawing.Color.Magenta;
             tbtnToSD3000Invoive.Click += btnToSDInvoice_Click;
             toolStrip1.Items.Add(tbtnToSD3000Invoive);
+        }
+
+        private void TbtnImport_HeiXml_Click(object sender, EventArgs e)
+        {
+            DataSet dataSet = XmlConvertor.ImportXmlToDataTable_Hei();
+            if(dataSet != null)
+            {
+                dataGridView_Mst.DataSource = dataSet.Tables[0];
+                dataGridView2.DataSource = dataSet.Tables[1];
+
+                toolStripStatusLabel1.Text = string.Format("记录数：{0}   总金额：{1}"
+                    , dataSet.Tables[0].Rows.Count
+                    , dataSet.Tables[0].Compute("sum(jshj)", ""));
+            }
+        }
+
+        DataTable GroupByMst(string mergeType)
+        {
+            DataTable credenceTable = SD3000.GetEmptyCredenceItem();
+
+            DataTable mstTable = dataGridView_Mst.DataSource as DataTable;
+            if (mstTable == null) return credenceTable;
+
+            switch (mergeType)
+            {
+                case  "按购货单位合并":
+                    #region
+                    var query = from t in mstTable.AsEnumerable()
+                        group t by new { t1 = t.Field<string>("ghdwsbh")  } into m
+                        select new
+                        {
+                            vendorcode = m.Key.t1,
+                            vendor = m.FirstOrDefault().Field<string>("ghdwmc"),
+                            debit = m.Sum(n => n.Field<decimal>("jshj")),
+                            credit = m.Sum(n => n.Field<decimal>("hjse"))
+                        };
+                    if (query.ToList().Count > 0)
+                    {
+                        query.ToList().ForEach(q =>
+                        {
+                            DataRow row = credenceTable.NewRow();
+                            row["debit"] = q.debit;
+                            row["credit"] = q.credit;
+                            row["vendor"] = q.vendor;
+                            credenceTable.Rows.Add(row);
+                        });
+                    }
+                    #endregion
+                    break;
+                case "按购货单位和期别合并":
+                    #region
+                    var query2 = from t in mstTable.AsEnumerable()
+                                group t by new { t1 = t.Field<string>("ghdwmc"), t2 = t.Field<string>("qb") } into m
+                                select new
+                                {
+                                    vendor = m.Key.t1,
+                                    kprq = m.Key.t2,
+                                    debit = m.Sum(n => n.Field<decimal>("jshj")),
+                                    credit = m.Sum(n => n.Field<decimal>("hjse"))
+                                };
+                    if (query2.ToList().Count > 0)
+                    {
+                        query2.ToList().ForEach(q =>
+                        {
+                            DataRow row = credenceTable.NewRow();
+                            row["debit"] = q.debit;
+                            row["credit"] = q.credit;
+                            row["vendor"] = q.vendor;
+                            credenceTable.Rows.Add(row);
+                        });
+                    }
+                    #endregion
+                    break;
+                case "合并生成一张凭证":
+                    #region
+                    DataRow r = credenceTable.NewRow();
+                    decimal debit = 0m;
+                    decimal credit = 0m;
+                    foreach (DataRow row in mstTable.Rows)
+                    {
+                        if (row.RowState == DataRowState.Deleted)
+                            continue;
+
+                        debit += decimal.Parse(row["jshj"].ToString());
+                        credit += decimal.Parse(row["hjse"].ToString());
+
+                    }
+                    r["debit"] = debit;
+                    r["credit"] = credit;
+                    credenceTable.Rows.Add(r);
+                    #endregion
+                    break;
+                case "不合并":
+                    #region
+                    foreach (DataRow row in mstTable.Rows)
+                    {
+                        if (row.RowState == DataRowState.Deleted)
+                            continue;
+
+                        DataRow r2 = credenceTable.NewRow();
+                        r2["debit"] = row["jshj"];
+                        r2["credit"] = row["hjse"];
+                        r2["vendor"] = row["ghdwmc"];
+                        credenceTable.Rows.Add(r2);
+                    }
+                    #endregion
+                    break;
+
+            }
+
+            return credenceTable;
         }
     }
 }

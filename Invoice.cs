@@ -46,6 +46,23 @@ namespace BaiwangExport
             return s;
         }
 
+        /// <summary>
+        /// 导入黑盘XML文件
+        /// </summary>
+        /// <returns></returns>
+        public static string GetInvoices()
+        {
+            string s = string.Empty;
+            try
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
+            return s;
+        }
     }
 }

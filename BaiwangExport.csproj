@@ -88,6 +88,12 @@
     <Compile Include="FormCredence.Designer.cs">
       <DependentUpon>FormCredence.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMergeType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMergeType.Designer.cs">
+      <DependentUpon>FormMergeType.cs</DependentUpon>
+    </Compile>
     <Compile Include="SD3000.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="DataTableConvertBytes.cs" />
@@ -131,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormCredence.resx">
       <DependentUpon>FormCredence.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMergeType.resx">
+      <DependentUpon>FormMergeType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSDSetting.resx">
       <DependentUpon>FormSDSetting.cs</DependentUpon>

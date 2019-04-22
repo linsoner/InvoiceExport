@@ -7,6 +7,7 @@ using System.Xml;
 using System.Data;
 using System.IO;
 using System.Xml.Linq;
+using System.Windows.Forms;
 
 namespace BaiwangExport
 {
@@ -24,7 +25,12 @@ namespace BaiwangExport
             return doc;
         }
 
-        public static DataSet XmlToDataSet(string xmlStr)
+        /// <summary>
+        /// 黑盘硬件直接读取的XML转DataSet
+        /// </summary>
+        /// <param name="xmlStr"></param>
+        /// <returns></returns>
+        public static DataSet XmlToDataSet_Hei(string xmlStr)
         {
             XmlDocument doc = StringToXml(xmlStr);
             if (doc == null) return null;
@@ -99,6 +105,62 @@ namespace BaiwangExport
         }
 
         /// <summary>
+        /// 黑盘导出的XML转DataTable
+        /// </summary>
+        /// <param name="xmlStr"></param>
+        /// <returns></returns>
+        public static DataSet ImportXmlToDataTable_Hei()
+        {
+            DataSet dataSet = InitInvoiceDataTable();
+            DataTable mstTable = dataSet.Tables[0];
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.DefaultExt = "XML文件(*.xml)";
+            string fileName = string.Empty;
+            if (openFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                return null;
+            }
+            fileName = openFileDialog.FileName;
+            //将XML文件加载进来
+            XDocument document = XDocument.Load(fileName);
+            if (document == null)
+                return null;
+
+            //获取到XML的根元素进行操作
+            XElement root = document.Root;
+            XElement ele = root.Element("YKFP");
+            IEnumerable<XElement> enumerable = ele.Elements();
+            int xh = 1;
+            foreach (XElement item in enumerable)
+            {
+                if (!item.HasAttributes)
+                    continue;
+                if (item.Attribute("发票状态") != null && item.Attribute("客户识别号").Value.Contains("作废"))
+                    continue;
+
+                DataRow row = mstTable.NewRow();
+                row["xh"] = xh; //序号
+                xh++;
+                row["ghdwsbh"] = item.Attribute("客户识别号").Value;
+                row["kprq"] = item.Attribute("开票日期").Value;
+                row["qb"] = item.Attribute("开票日期").Value.Substring(0,7);
+                row["jshj"] = item.Attribute("价税合计").Value;
+                row["hjje"] = item.Attribute("合计金额").Value;
+                row["hjse"] = item.Attribute("税额").Value;
+                row["ghdwsbh"] = item.Attribute("客户识别号").Value;
+                row["ghdwmc"] = item.Attribute("客户名称").Value;
+                row["fphm"] = item.Attribute("发票号码").Value;
+                row["fpdm"] = item.Attribute("发票代码").Value;
+                row["fpzt"] = item.Attribute("发票状态").Value;
+                row["bz"] = item.Attribute("主要商品名称").Value;
+
+                mstTable.Rows.Add(row);
+            }
+
+            return dataSet;
+        }
+
+        /// <summary>
         /// 将xml转为Datable
         /// </summary>
         public static DataTable XmlToDataTable2(string xmlStr)
@@ -144,11 +206,12 @@ namespace BaiwangExport
             DataColumn column = new DataColumn("fpdm", typeof(string));//发票代码
             column.Caption = "发票代号";
             mstTable.Columns.Add(column);
-            mstTable.PrimaryKey = new DataColumn[] { column };
-
+            
             column = new DataColumn("fphm", typeof(string));//发票号码
             column.Caption = "发票号码";
             mstTable.Columns.Add(column);
+            mstTable.PrimaryKey = new DataColumn[] { mstTable.Columns["fpdm"], mstTable.Columns["fphm"] };
+
             column = new DataColumn("xh", typeof(int));
             column.Caption = "序号";
             mstTable.Columns.Add(column);
@@ -160,6 +223,9 @@ namespace BaiwangExport
             mstTable.Columns.Add(column);
             column = new DataColumn("kprq", typeof(string));//开票日期
             column.Caption = "开票日期";
+            mstTable.Columns.Add(column);
+            column = new DataColumn("qb", typeof(string));//期别
+            column.Caption = "期别";
             mstTable.Columns.Add(column);
             column = new DataColumn("xhdwsbh", typeof(string));//销货单位识别号
             column.Caption = "销货单位识别号";
@@ -196,8 +262,8 @@ namespace BaiwangExport
             ds.Tables.Add(mstTable);
 
             DataTable ItemTable = new DataTable("Item");
-            column = new DataColumn("fpdm", typeof(string));
-            column.Caption = "发票代号";
+            column = new DataColumn("fphm", typeof(string));
+            column.Caption = "发票号码";
             ItemTable.Columns.Add(column);
             DataColumn column2 = new DataColumn("xh", typeof(string));
             column2.Caption = "序号";

@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cboCashSubject = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblTaxNumber = new System.Windows.Forms.Label();
             this.cboGroupBy = new System.Windows.Forms.ComboBox();
             this.lblGroupBy = new System.Windows.Forms.Label();
@@ -45,6 +48,7 @@
             this.cboCredType = new System.Windows.Forms.ComboBox();
             this.lblCredType = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.credid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fenluno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.rawdebit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.rawcredit = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -79,6 +83,9 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.label7);
+            this.splitContainer1.Panel1.Controls.Add(this.cboCashSubject);
+            this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.lblTaxNumber);
             this.splitContainer1.Panel1.Controls.Add(this.cboGroupBy);
             this.splitContainer1.Panel1.Controls.Add(this.lblGroupBy);
@@ -94,7 +101,6 @@
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.cboCredType);
             this.splitContainer1.Panel1.Controls.Add(this.lblCredType);
-            this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
             // 
             // splitContainer1.Panel2
             // 
@@ -102,6 +108,34 @@
             this.splitContainer1.Size = new System.Drawing.Size(1264, 610);
             this.splitContainer1.SplitterDistance = 120;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.Color.Red;
+            this.label7.Location = new System.Drawing.Point(832, 62);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(113, 12);
+            this.label7.TabIndex = 35;
+            this.label7.Text = "不做应收账款时选择";
+            this.label7.Visible = false;
+            // 
+            // cboCashSubject
+            // 
+            this.cboCashSubject.FormattingEnabled = true;
+            this.cboCashSubject.Location = new System.Drawing.Point(597, 60);
+            this.cboCashSubject.Name = "cboCashSubject";
+            this.cboCashSubject.Size = new System.Drawing.Size(229, 20);
+            this.cboCashSubject.TabIndex = 34;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(494, 64);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(101, 12);
+            this.label1.TabIndex = 33;
+            this.label1.Text = "收款科目（借方）";
             // 
             // lblTaxNumber
             // 
@@ -118,11 +152,14 @@
             this.cboGroupBy.FormattingEnabled = true;
             this.cboGroupBy.Items.AddRange(new object[] {
             "按购货单位合并",
-            "按购货单位和期别合并"});
+            "按购货单位和期别合并",
+            "合并成一张凭证",
+            "不合并"});
             this.cboGroupBy.Location = new System.Drawing.Point(597, 34);
             this.cboGroupBy.Name = "cboGroupBy";
             this.cboGroupBy.Size = new System.Drawing.Size(150, 20);
             this.cboGroupBy.TabIndex = 31;
+            this.cboGroupBy.Visible = false;
             // 
             // lblGroupBy
             // 
@@ -132,6 +169,7 @@
             this.lblGroupBy.Size = new System.Drawing.Size(53, 12);
             this.lblGroupBy.TabIndex = 30;
             this.lblGroupBy.Text = "合并方式";
+            this.lblGroupBy.Visible = false;
             // 
             // cboAccount
             // 
@@ -238,6 +276,7 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.credid,
             this.fenluno,
             this.rawdebit,
             this.rawcredit,
@@ -256,6 +295,13 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(1264, 486);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // credid 
+            // 
+            this.credid.DataPropertyName = "credid";
+            this.credid.HeaderText = "凭证ID";
+            this.credid.Name = "credid";
+            this.credid.Visible = false;
             // 
             // fenluno
             // 
@@ -381,6 +427,10 @@
         private System.Windows.Forms.ComboBox cboGroupBy;
         private System.Windows.Forms.Label lblGroupBy;
         private System.Windows.Forms.Label lblTaxNumber;
+        private System.Windows.Forms.ComboBox cboCashSubject;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn credid;
         private System.Windows.Forms.DataGridViewTextBoxColumn fenluno;
         private System.Windows.Forms.DataGridViewTextBoxColumn rawdebit;
         private System.Windows.Forms.DataGridViewTextBoxColumn rawcredit;
