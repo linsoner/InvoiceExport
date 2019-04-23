@@ -26,10 +26,12 @@ namespace BaiwangExport
         public FormCredence()
         {
             InitializeComponent();
+            dataGridView1.DataError += DataGridView1_DataError;
             InitialToolsTrip();
             cboAccount.SelectedIndexChanged += CboAccount_SelectedIndexChanged;
             dataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
         }
+
         void InitialToolsTrip()
         {
             ToolStripButton tbtnGetSub = new ToolStripButton();
@@ -81,14 +83,23 @@ namespace BaiwangExport
                 cboAccount.DataSource = table;
                 cboAccount.DisplayMember = "corpname";
                 cboAccount.ValueMember = "accsetname";
-                cboAccount.SelectedIndexChanged += CboAccount_SelectedIndexChanged;
+                //cboAccount.SelectedIndexChanged += CboAccount_SelectedIndexChanged;
             }
         }
 
         private void CboAccount_SelectedIndexChanged(object sender, EventArgs e)
         {
             #region 根据选择的账套修改数据库连接字符串
-            string dbSuffix = cboAccount.SelectedValue.ToString();
+            string dbSuffix = string.Empty;
+            DataRowView v = cboAccount.SelectedValue as DataRowView;
+            if(v!=null)
+            {
+                dbSuffix = v["accsetname"].ToString();
+            }
+            else
+            {
+                dbSuffix = cboAccount.SelectedValue.ToString();
+            }
 
             if (string.IsNullOrWhiteSpace(dbSuffix)) return;
 
@@ -303,10 +314,15 @@ namespace BaiwangExport
             if (cbo == null)
                 return;
 
-            DataRowView view = cbo.SelectedValue as DataRowView;
-            if (view == null) return; 
+            //DataRowView view = cbo.SelectedValue as DataRowView;
+            //if (view == null) return; 
 
-            row.Cells["subID_D"].Value = view["subid"];
+            row.Cells["subID_D"].Value = cbo.SelectedValue;
+        }
+
+        private void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+
         }
     }
 
