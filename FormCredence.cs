@@ -26,10 +26,17 @@ namespace BaiwangExport
         public FormCredence()
         {
             InitializeComponent();
+            dataGridView1.DataError += DataGridView1_DataError;
             InitialToolsTrip();
             cboAccount.SelectedIndexChanged += CboAccount_SelectedIndexChanged;
             dataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
         }
+
+        private void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
         void InitialToolsTrip()
         {
             ToolStripButton tbtnGetSub = new ToolStripButton();
@@ -88,7 +95,14 @@ namespace BaiwangExport
         private void CboAccount_SelectedIndexChanged(object sender, EventArgs e)
         {
             #region 根据选择的账套修改数据库连接字符串
-            string dbSuffix = cboAccount.SelectedValue.ToString();
+            string dbSuffix = string.Empty;
+            var v = cboAccount.SelectedValue;
+            if (v is DataRowView)
+            {
+                dbSuffix = ((DataRowView)v)["accsetname"].ToString();
+            }
+            else
+                dbSuffix = cboAccount.SelectedValue.ToString();
 
             if (string.IsNullOrWhiteSpace(dbSuffix)) return;
 
@@ -149,7 +163,12 @@ namespace BaiwangExport
                 if (rows2.Length > 0)
                     cboCashSubject.SelectedIndex = cashTable.Rows.IndexOf(rows2[0]);
 
+
                 _SubjectTable = table.Copy();
+                cboDetailSubject.DataSource = _SubjectTable;
+                cboDetailSubject.DisplayMember = "displayname";
+                cboDetailSubject.ValueMember = "subid";
+                cboDetailSubject.SelectedIndexChanged += CboSubject_SelectedIndexChanged;
             }
         }
         public void GetCredTypes()
@@ -269,13 +288,14 @@ namespace BaiwangExport
 
             foreach (DataRow row in table.Rows)
             {
-                string name = row["vendor"].ToString();
-                if (string.IsNullOrWhiteSpace(name))
+                string vendor = row["vendor"].ToString();
+                if (string.IsNullOrWhiteSpace(vendor))
                     continue;
-                DataTable subTable = SD3000.GetSubjectByName(ConnString, name);
+
+                DataTable subTable = SD3000.GetSubjectByName(ConnString, vendor);
                 if(subTable != null && subTable.Rows.Count>0)
                 {
-                    row["subid_d"] = subTable.Rows[0]["subid"];
+                    row["subid"] = subTable.Rows[0]["subid"];
                     row["subID_D_Name"] = subTable.Rows[0]["name"];
                 }
             }
@@ -283,14 +303,19 @@ namespace BaiwangExport
 
         private void DataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            ComboBox cbo = e.Control as ComboBox;
-            if (cbo != null && _SubjectTable != null)
+            DataGridViewColumn column = dataGridView1.Columns[dataGridView1.CurrentCell.ColumnIndex];
+            if (column == null) return;
+            if(column == dataGridView1.Columns["subID_D_Name"])
             {
-                cbo.DataSource = _SubjectTable;
-                cbo.DisplayMember = "displayname";
-                cbo.ValueMember = "subid";
+                //cboDetailSubject.Location.X = dataGridView1.Location.X 
+                //    + dataGridView1.GetCellDisplayRectangle(column.Index, dataGridView1.CurrentCell.RowIndex, false).X;
+                cboDetailSubject.Location = new Point(
+                    dataGridView1.Location.X
+                    + dataGridView1.GetCellDisplayRectangle(column.Index, dataGridView1.CurrentCell.RowIndex, false).X
+                    , dataGridView1.Location.Y
+                    + dataGridView1.GetCellDisplayRectangle(column.Index, dataGridView1.CurrentCell.RowIndex, false).Y);
+                    
             }
-            cbo.SelectedIndexChanged += CboSubject_SelectedIndexChanged;
         }
 
         private void CboSubject_SelectedIndexChanged(object sender, EventArgs e)
@@ -307,6 +332,7 @@ namespace BaiwangExport
             if (view == null) return; 
 
             row.Cells["subID_D"].Value = view["subid"];
+            row.Cells["subID_D_Name"].Value = view["displayname"];
         }
     }
 

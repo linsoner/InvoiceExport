@@ -48,6 +48,8 @@
             this.cboCredType = new System.Windows.Forms.ComboBox();
             this.lblCredType = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.cboDetailSubject = new System.Windows.Forms.ComboBox();
+            this.fSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.credid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fenluno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.rawdebit = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,7 +57,7 @@
             this.brief = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.moneyid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.rate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.subID_D_Name = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.subID_D_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.subID_D = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.billNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -83,6 +85,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.cboDetailSubject);
             this.splitContainer1.Panel1.Controls.Add(this.label7);
             this.splitContainer1.Panel1.Controls.Add(this.cboCashSubject);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
@@ -276,6 +279,7 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.fSelected,
             this.credid,
             this.fenluno,
             this.rawdebit,
@@ -296,7 +300,26 @@
             this.dataGridView1.Size = new System.Drawing.Size(1264, 486);
             this.dataGridView1.TabIndex = 0;
             // 
-            // credid 
+            // cboDetailSubject
+            // 
+            this.cboDetailSubject.FormattingEnabled = true;
+            this.cboDetailSubject.Location = new System.Drawing.Point(597, 85);
+            this.cboDetailSubject.Name = "cboDetailSubject";
+            this.cboDetailSubject.Size = new System.Drawing.Size(229, 20);
+            this.cboDetailSubject.TabIndex = 36;
+            this.cboDetailSubject.Visible = false;
+            // 
+            // fSelected
+            // 
+            this.fSelected.DataPropertyName = "fSelected";
+            this.fSelected.FalseValue = "0";
+            this.fSelected.HeaderText = "选择";
+            this.fSelected.IndeterminateValue = "0";
+            this.fSelected.Name = "fSelected";
+            this.fSelected.TrueValue = "1";
+            this.fSelected.Width = 40;
+            // 
+            // credid
             // 
             this.credid.DataPropertyName = "credid";
             this.credid.HeaderText = "凭证ID";
@@ -351,6 +374,8 @@
             this.subID_D_Name.DataPropertyName = "subID_D_Name";
             this.subID_D_Name.HeaderText = "应收账款科目";
             this.subID_D_Name.Name = "subID_D_Name";
+            this.subID_D_Name.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.subID_D_Name.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.subID_D_Name.Width = 250;
             // 
             // subID_D
@@ -430,6 +455,8 @@
         private System.Windows.Forms.ComboBox cboCashSubject;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cboDetailSubject;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn fSelected;
         private System.Windows.Forms.DataGridViewTextBoxColumn credid;
         private System.Windows.Forms.DataGridViewTextBoxColumn fenluno;
         private System.Windows.Forms.DataGridViewTextBoxColumn rawdebit;
@@ -437,7 +464,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn brief;
         private System.Windows.Forms.DataGridViewTextBoxColumn moneyid;
         private System.Windows.Forms.DataGridViewTextBoxColumn rate;
-        private System.Windows.Forms.DataGridViewComboBoxColumn subID_D_Name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn subID_D_Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn subID_D;
         private System.Windows.Forms.DataGridViewTextBoxColumn billNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn credit;

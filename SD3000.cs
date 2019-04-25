@@ -190,6 +190,11 @@ namespace BaiwangExport
             for (int i = 0; i < credence.Rows.Count; i++)
             {
                 sb.Length = 0;
+                string fSelected = credence.Rows[i]["fSelected"].ToString();
+                if (fSelected.Equals("0"))
+                    continue;
+
+                
                 decimal debit = 0; //含税金额
                 decimal.TryParse(credence.Rows[i]["debit"].ToString(), out debit);
                 if (debit == 0)
@@ -332,6 +337,12 @@ namespace BaiwangExport
             column = new DataColumn("subid", typeof(string));
             column.Caption = "科目ID";
             table.Columns.Add(column);
+            //column = new DataColumn("subid_d", typeof(string));
+            //column.Caption = "借方科目ID";
+            //table.Columns.Add(column);
+            column = new DataColumn("subID_D_Name", typeof(string));
+            column.Caption = "借方科目名称";
+            table.Columns.Add(column);
             column = new DataColumn("brief", typeof(string));
             column.DefaultValue = "应收账款";
             column.Caption = "摘要";
@@ -343,6 +354,10 @@ namespace BaiwangExport
             column = new DataColumn("billNumber", typeof(int));
             column.DefaultValue = 0;
             column.Caption = "附件数";
+            table.Columns.Add(column);
+            column = new DataColumn("fSelected", typeof(int));
+            column.DefaultValue = 1;
+            column.Caption = "选择";
             table.Columns.Add(column);
 
             return table;
