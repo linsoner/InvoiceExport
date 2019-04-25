@@ -22,7 +22,6 @@ namespace BaiwangExport
             dataGridView1.EditingControlShowing += DataGridView1_EditingControlShowing;
             dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
             GetData();
-
             SetEditeBtn(false);
 
         }
@@ -88,10 +87,13 @@ namespace BaiwangExport
                 if (table.Rows.Count > 0)
                 {
                     accset.Items.Add(table.Rows[0]["accset"].ToString());
-                    dataGridView1.AllowUserToAddRows = false;
-                    
+                    dataGridView1.AllowUserToAddRows = false; 
                 }
-                dataGridView1.DataSource = SD3000.GetConnectionTable();
+                else
+                {
+                    dataGridView1.AllowUserToAddRows = true;
+                }
+                dataGridView1.DataSource = table;
             }
             catch(Exception ex)
             {
@@ -128,20 +130,40 @@ namespace BaiwangExport
 
         private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            string server = string.Empty;
+            string dbUser = string.Empty;
+            string password = string.Empty;
+            bool IntegratedSecurity = false;
+            DataTable table = dataGridView1.DataSource as DataTable;
             string fieldName = dataGridView1.Columns[e.ColumnIndex].DataPropertyName.ToLower();
             if (fieldName.Equals("integratedSecurity") || fieldName.Equals("password"))
             {
-                String server = dataGridView1.CurrentRow.Cells["server"].Value.ToString();
-                string dbUser = dataGridView1.CurrentRow.Cells["dbUser"].Value.ToString();
-                string password = dataGridView1.CurrentRow.Cells["password"].Value.ToString();
-                bool IntegratedSecurity = false;
-                bool.TryParse(dataGridView1.CurrentRow.Cells["integratedSecurity"].Value.ToString()
-                    , out IntegratedSecurity);
+                if (dataGridView1.CurrentRow != null)
+                {
+                    server = dataGridView1.CurrentRow.Cells["server"].Value.ToString();
+                    dbUser = dataGridView1.CurrentRow.Cells["dbUser"].Value.ToString();
+                    password = dataGridView1.CurrentRow.Cells["password"].Value.ToString();
+                    bool.TryParse(dataGridView1.CurrentRow.Cells["integratedSecurity"].Value.ToString()
+                        , out IntegratedSecurity);
+                }
+                else
+                {
+                    if (table != null && table.Rows.Count > 0)
+                    {
+                        server = table.Rows[0]["server"].ToString();
+                        dbUser = table.Rows[0]["dbUser"].ToString();
+                        password = table.Rows[0]["password"].ToString();
+                        bool.TryParse(table.Rows[0]["integratedSecurity"].ToString()
+                            , out IntegratedSecurity);
+                    }
+                }
+
                 if (!string.IsNullOrWhiteSpace(password) || IntegratedSecurity)
                 {
                     string connString = DBHelper.GetConnectionString(server, "master", dbUser, password, IntegratedSecurity);
                     try
                     {
+                        accset.Items.Clear();
                         _AccountTable = SD3000.GetSDSysDb(connString);
                     }
                     catch(SqlException e1)

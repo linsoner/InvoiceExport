@@ -124,7 +124,9 @@ namespace BaiwangExport
             column.Caption = "集成Windows认证";
             column.DefaultValue = 0;
             table.Columns.Add(column);
-            
+
+            DataRow row = table.NewRow();
+            table.Rows.Add(row);
 
             return table;
         }
