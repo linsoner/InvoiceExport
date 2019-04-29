@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="GBK"?>
+<taxML cnName="增值税发票开具明细" xmlns="http://www.chinatax.gov.cn/dataspec/" name="slSbbtjZzsfpkjmxRequest" version="SW5001-2006" xsi:type="slSbbtjZzsfpkjmxRequest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <sbbZzsfpkjmx>
+    <head>
+      <publicHead>
+        <nsrsbh>91440604MA4WQHAD1R</nsrsbh>
+        <nsrmc>佛山市康怡一宠物诊所有限公司</nsrmc>
+        <tbrq>20190415</tbrq>
+        <sssq>
+          <rqQ>20190101</rqQ>
+          <rqZ>20190131</rqZ>
+        </sssq>
+      </publicHead>
+    </head>
+    <body>
+      <zyfpkjmx />
+      <zyfpkjhjxx>
+        <zyfpkjhjs>0</zyfpkjhjs>
+        <zzszyfphjJe>0</zzszyfphjJe>
+        <zzszyfphjSe>0</zzszyfphjSe>
+      </zyfpkjhjxx>
+      <ptfpkjmx>
+        <mxxx>
+          <fpdm>4400174320</fpdm>
+          <fphm>12563950</fphm>
+          <kprq>20190119 16:21:59</kprq>
+          <gmfnsrsbh>91440605MA4WRLAH0N</gmfnsrsbh>
+          <je>160.19</je>
+          <se>4.81</se>
+          <zfbz>N</zfbz>
+          <xh>1</xh>
+        </mxxx>
+      </ptfpkjmx>
+      <ptfpkjhjxx>
+        <ptfpkjhjs>1</ptfpkjhjs>
+        <ptfpkjhjJe>160.19</ptfpkjhjJe>
+        <ptfpkjhjSe>4.81</ptfpkjhjSe>
+      </ptfpkjhjxx>
+    </body>
+  </sbbZzsfpkjmx>
+</taxML>
